@@ -70,12 +70,28 @@ function WebStructure() {
               },
               styles:{
                 id:uuidv4(),
-                content:["Nav","Main","SidNav"],
+                content:{
+                  colors:[
+                    {
+                        "--primary-100":"#1E2022",
+                        "--primary-200":"#34373b",
+                        "--primary-300":"#F0F5F9",
+                        "--accent-100":"#788189",
+                        "--accent-200":"#e1e4e6",
+                        "--text-100":"#1E2022",
+                        "--text-200":"#52616B",
+                        "--bg-100":"#F0F5F9",
+                        "--bg-200":"#C9D6DF",
+                        "--bg-300":"#bfc7d1",
+      
+                    }
+                  ]
+                },
                 isOpen:false
               }
             }} />
           </div>
-          <div className="page grid  relative">
+          <div className="page grid relative">
               <div className="btns flex absolute top-0 right-0 items-center">
                 <div
                   className="btn edit-menu-btn "

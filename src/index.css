@@ -2,25 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 :root{
-    --primary-100:#2E8B57;
-    --primary-200:#61bc84;
-    --primary-300:#c6ffe6;
-    --accent-100:#8FBC8F;
-    --accent-200:#345e37;
+    --primary-100:#61DAFB;
+    --primary-200:#39bcdc;
+    --primary-300:#007997;
+    --accent-100:#FF4081;
+    --accent-200:#ffe4ff;
     --text-100:#FFFFFF;
     --text-200:#e0e0e0;
-    --bg-100:#1E1E1E;
-    --bg-200:#2d2d2d;
-    --bg-300:#454545;
+    --bg-100:#282C34;
+    --bg-200:#383c44;
+    --bg-300:#50555e;
       
     --faded-black:#000000cc;
 }
 *{
     margin: 0;
-    padding:0;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 18px;
+    font-size: 17px;
     scrollbar-width: none;
 }
 body{

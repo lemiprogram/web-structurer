@@ -1,14 +1,16 @@
 import React from 'react'
 
-function Profile() {
+function Home() {
   return (
         <>
             <div 
                 className="page"
                 id='home-section'
-            >Profile</div>
+            >
+                <div className="heading ">Recent vfd</div>
+            </div>
         </>
-  )
+    )
 }
 
-export default Profile
+export default Home

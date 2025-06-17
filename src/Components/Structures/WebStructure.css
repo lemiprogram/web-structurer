@@ -1,0 +1,19 @@
+.selection .option{
+    padding: 10px 20px;
+    transition: 1s;
+}
+
+.selection .options li:hover{
+    background: var(--bg-200);
+}
+.option{
+    cursor: pointer;
+    padding-inline: 10px ;
+}
+.selection svg{
+    fill: var(--text-100);
+    stroke-width: 10%;
+    color: var(--bg-300);
+    transform: translateY(2.5px);
+
+}
