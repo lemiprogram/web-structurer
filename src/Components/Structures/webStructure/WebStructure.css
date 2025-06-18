@@ -9,6 +9,7 @@
 .option{
     cursor: pointer;
     padding-inline: 10px ;
+    font-size: .8em;
 }
 .selection svg{
     fill: var(--text-100);
@@ -16,4 +17,8 @@
     color: var(--bg-300);
     transform: translateY(2.5px);
 
+}
+.page{
+    background-color: var(--bg-100);
+    color: var(--text-100);
 }

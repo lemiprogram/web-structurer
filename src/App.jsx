@@ -9,7 +9,7 @@ import NotFound from './Components/Pages/NotFound'
 import Create from './Components/Pages/Create'
 import Templates from './Components/Pages/Templates'
 import Login from './Components/Pages/Login'
-import WebStructure from './Components/Structures/WebStructure';
+import WebStructure from './Components/Structures/webStructure/WebStructure';
 import Projects from './Components/Pages/Projects';
 
 export const StructureContext = createContext() 
@@ -29,7 +29,7 @@ function App() {
                 <Route index element={<Home/>}/>
                 <Route path='profile' element={<Profile/>}/>
                 <Route path='projects' element={<Projects/>}/>
-                <Route path={"create"}  element={<WebStructure/>}/>
+                <Route path={"create"}  element={currentStructure?<WebStructure/>:<Create/>}/>
                 <Route path='templates' element={<Templates/>}/>
                 <Route path='login' element={<Login/>}/>
                 <Route path='*' element={<NotFound/>}/>

@@ -8,7 +8,7 @@ function Profile() {
             <div 
                 className="page"
                 id='home-section'
-            >{greeting}</div>
+            ></div>
         </>
   )
 }

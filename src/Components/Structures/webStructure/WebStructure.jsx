@@ -1,11 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import './WebStructure.css'
 import { v4 as uuidv4 } from 'uuid';
 import { FaBars, FaGreaterThan } from 'react-icons/fa'
-import { StructureContext } from '../../App'
-import Accordion from './StaticStructures/Accordion'
+import { StructureContext } from '../../../App'
+import Accordion from '../StaticStructures/Accordion'
 import EditNav from './EditNav';
 import { MdFullscreen, MdFullscreenExit } from 'react-icons/md';
+import allMyColors from '../../../allMyColors';
+
+export const WebStructureContext = createContext()
 
 function WebStructure() {
   const [isEditing,setIsEditing] = useState(true)
@@ -13,7 +16,22 @@ function WebStructure() {
   const [showFullScreen, setShowFullScreen] = useState(true)
   const {currentStructure ,setCurrentStructure} = useContext(StructureContext)
   const editNav = useRef(null)
-  
+  const page = useRef(null)
+  const selections={
+                        structures:{
+                          id:uuidv4(),
+                          content:["Nav","Main","SidNav"],
+                          isOpen:false
+                        },
+                        styles:{
+                          id:uuidv4(),
+                          content:{
+                            colors:allMyColors(),
+                          },
+                          isOpen:false
+                        }
+                      }
+                      
   const showFullScreenFunc = (fS)=>{
     if(!editNav.current){
       return
@@ -56,42 +74,16 @@ function WebStructure() {
     
   }
   return (
-    <>
+    <>  
+      <WebStructureContext.Provider value={{selections, page,editNav}}>
         <div className="flex page">
+          
+            <EditNav />
+          
           <div 
-            className="sideNav h-full py-4  bg-[var(--bg-300)] flex flex-col justify-center editNav "
-            ref={editNav}
+            className="page grid relative"
+            ref={page}
           >
-            <EditNav selections={{
-              structures:{
-                id:uuidv4(),
-                content:["Nav","Main","SidNav"],
-                isOpen:false
-              },
-              styles:{
-                id:uuidv4(),
-                content:{
-                  colors:[
-                    {
-                        "--primary-100":"#1E2022",
-                        "--primary-200":"#34373b",
-                        "--primary-300":"#F0F5F9",
-                        "--accent-100":"#788189",
-                        "--accent-200":"#e1e4e6",
-                        "--text-100":"#1E2022",
-                        "--text-200":"#52616B",
-                        "--bg-100":"#F0F5F9",
-                        "--bg-200":"#C9D6DF",
-                        "--bg-300":"#bfc7d1",
-      
-                    }
-                  ]
-                },
-                isOpen:false
-              }
-            }} />
-          </div>
-          <div className="page grid relative">
               <div className="btns flex absolute top-0 right-0 items-center">
                 <div
                   className="btn edit-menu-btn "
@@ -108,10 +100,11 @@ function WebStructure() {
                   })}
                 >{showFullScreen?<MdFullscreen size="30px" />:<MdFullscreenExit size="30px"/>}</div>
               </div>
-              <div>cat</div>
+              <div style={{width:"50px", height:"50px", backgroundColor:"var(--primary-100)"}}>cat</div>
 
           </div>
         </div>
+      </WebStructureContext.Provider>
     </>
   )
 }
