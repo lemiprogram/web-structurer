@@ -6,10 +6,10 @@
 .selection .options li:hover{
     background: var(--bg-200);
 }
-.option{
+.item,.option{
     cursor: pointer;
     padding-inline: 10px ;
-    font-size: .8em;
+    font-size: .9rem;
 }
 .selection svg{
     fill: var(--text-100);
@@ -22,3 +22,4 @@
     background-color: var(--bg-100);
     color: var(--text-100);
 }
+

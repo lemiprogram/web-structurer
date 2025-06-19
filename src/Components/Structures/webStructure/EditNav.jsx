@@ -30,9 +30,19 @@ function EditNav() {
       selections[selection].isOpen = false
     })
   }
+  const toggleSelectionBoxes = (selected=null)=>{
+    document.querySelectorAll(".selection-boxes").forEach(sB=>{
+      if(sB===selected){
+        sB.classList.remove("hidden")
+        return
+      }
+      sB.classList.add("hidden")
+    })
+  }
+  
   return (
     <>
-      <EditNavContext.Provider value={{accordionFunc}}>
+      <EditNavContext.Provider value={{accordionFunc,toggleSelectionBoxes}}>
         <div 
             className="sideNav h-full py-4  bg-[var(--bg-300)] flex flex-col justify-center editNav relative "
             ref={editNav}

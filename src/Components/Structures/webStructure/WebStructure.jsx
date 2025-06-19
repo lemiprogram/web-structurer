@@ -7,6 +7,7 @@ import Accordion from '../StaticStructures/Accordion'
 import EditNav from './EditNav';
 import { MdFullscreen, MdFullscreenExit } from 'react-icons/md';
 import allMyColors from '../../../allMyColors';
+import setColorPalette from '../../../setColorPalette';
 
 export const WebStructureContext = createContext()
 
@@ -14,13 +15,23 @@ function WebStructure() {
   const [isEditing,setIsEditing] = useState(true)
   const [showEditNav, setShowEditNav] = useState(true)
   const [showFullScreen, setShowFullScreen] = useState(true)
-  const {currentStructure ,setCurrentStructure} = useContext(StructureContext)
+
+  const {currentStructure } = useContext(StructureContext)
+  
   const editNav = useRef(null)
   const page = useRef(null)
-  const selections={
+
+  useEffect(()=>renderCurrentStructure(),[currentStructure.content.styles.colorScheme])
+  function renderCurrentStructure(){
+    localStorage.setItem("currentStructure",JSON.stringify(currentStructure))
+    setColorPalette(page.current,currentStructure.content.styles.colorScheme )
+  }
+const MAX_WIDTH = 20
+const MAX_HEIGHT = 20
+const selections={
                         structures:{
                           id:uuidv4(),
-                          content:["Nav","Main","SidNav"],
+                          content:["navs","sideNavs","blocks", "inputs","buttons","Modals"],
                           isOpen:false
                         },
                         styles:{
@@ -61,6 +72,7 @@ function WebStructure() {
       return
     }
     if(sE){
+      console.log(page.current.style.width)
 
       editNav.current.style.transition = "1s"
       editNav.current.style.width = "auto"
@@ -83,6 +95,10 @@ function WebStructure() {
           <div 
             className="page grid relative"
             ref={page}
+            style={{
+                    gridTemplateColumns:` repeat(${MAX_WIDTH},auto)`,
+                    gridTemplateRows:` repeat(${MAX_HEIGHT},1fr)`,
+                  }}
           >
               <div className="btns flex absolute top-0 right-0 items-center">
                 <div
@@ -99,8 +115,8 @@ function WebStructure() {
                     return !fS
                   })}
                 >{showFullScreen?<MdFullscreen size="30px" />:<MdFullscreenExit size="30px"/>}</div>
+
               </div>
-              <div style={{width:"50px", height:"50px", backgroundColor:"var(--primary-100)"}}>cat</div>
 
           </div>
         </div>

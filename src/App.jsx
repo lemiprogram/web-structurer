@@ -13,13 +13,29 @@ import WebStructure from './Components/Structures/webStructure/WebStructure';
 import Projects from './Components/Pages/Projects';
 
 export const StructureContext = createContext() 
-function App() {
-  const [currentStructure, setCurrentStructure] = useState({
+!localStorage.getItem("currentStructure")?localStorage.setItem("currentStructure",JSON.stringify({
       id: uuidv4(),
       name,
-      content:{},
-      styles:{},
-  })
+      content:{str:{
+        headers:null,
+        navs:null,
+        sideNavs:null,
+        blocks:null,
+        inputs:null,
+        buttons:null,
+        Modals:null,
+    },
+    styles:{
+        colorScheme:null,
+        fontFamily:null,
+        fontSize:null,
+    },
+    layouts:{},
+      }
+})):""
+  
+function App() {
+  const [currentStructure, setCurrentStructure] = useState(JSON.parse(localStorage.getItem("currentStructure")))
   return (
     <>
         <BrowserRouter>

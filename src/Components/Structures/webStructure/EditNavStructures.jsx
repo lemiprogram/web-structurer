@@ -19,14 +19,18 @@ function  EditNavStructures() {
                         onMouseDown={()=>accordionFunc("structures")}
         
                       >{"structures"}{structures.isOpen?<FaMinus/>:<FaPlus/>} </div>
-                      {structures.isOpen ?<div className='options flex flex-col list-none'>
-                        {structures.content.map(option=>
-                        <li
-                          className='capitalize option indent-6'
-                          key={option + "-" +structures.id}
-                          id={option + "-" +structures.id}
-                        >{option}</li>)}
-                      </div>:""}
+                      {structures.isOpen ?
+                        <div className='options flex flex-col list-none'>
+                          {structures.content.map(option=>
+                          <li
+                            className='capitalize option indent-4'
+                            key={option + "-" +structures.id}
+                            id={option + "-" +structures.id}
+                          ><div className="item">{option}</div></li>)}
+                        </div>
+                      :
+                        ""
+                      }
         </div>
     </>
   )

@@ -2,16 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 :root{
-    --primary-100:#61DAFB;
-    --primary-200:#39bcdc;
-    --primary-300:#007997;
-    --accent-100:#FF4081;
-    --accent-200:#ffe4ff;
-    --text-100:#FFFFFF;
-    --text-200:#e0e0e0;
-    --bg-100:#282C34;
-    --bg-200:#383c44;
-    --bg-300:#50555e;
+    --primary-100:#1E2022;
+    --primary-200:#34373b;
+    --primary-300:#F0F5F9;
+    --accent-100:#788189;
+    --accent-200:#e1e4e6;
+    --text-100:#1E2022;
+    --text-200:#52616B;
+    --bg-100:#F0F5F9;
+    --bg-200:#C9D6DF;
+    --bg-300:#bfc7d1;
       
     --faded-black:#000000cc;
 }
