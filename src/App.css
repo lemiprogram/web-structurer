@@ -37,11 +37,12 @@
     cursor: pointer;
     padding: 4px;
 }
-.color-boxes{
+.color-boxes,.header-boxes{
     padding: 20px;
     display: flex;
+    justify-content: center;
 }
-.color-boxes:hover{
+:is(.color-boxes,.header-boxes):hover{
     background: var(--bg-300);
 }
 .color-box{

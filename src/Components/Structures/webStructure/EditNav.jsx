@@ -5,12 +5,14 @@ import setColorPalette from '../../../setColorPalette';
 import { WebStructureContext } from './WebStructure';
 import EditNavStyles from './EditNavStyles';
 import EditNavStructures from './EditNavStructures';
+import { StructureContext, structureTemplate } from '../../../App';
 
 export const EditNavContext = createContext()
 
 function EditNav() {
  const [accordionIsOpen, setAccordionIsOpen] = useState(null)
- const {selections,page,editNav}  = useContext(WebStructureContext)
+ const {setCurrentStructure} = useContext(StructureContext)
+ const {selections,page,editNav,renderCurrentStructure}  = useContext(WebStructureContext)
   const accordionFunc = (selection)=>{
     setAccordionIsOpen(aO=>{
       if(aO === selection){
@@ -33,7 +35,7 @@ function EditNav() {
   const toggleSelectionBoxes = (selected=null)=>{
     document.querySelectorAll(".selection-boxes").forEach(sB=>{
       if(sB===selected){
-        sB.classList.remove("hidden")
+        sB.classList.toggle("hidden")
         return
       }
       sB.classList.add("hidden")
@@ -44,11 +46,26 @@ function EditNav() {
     <>
       <EditNavContext.Provider value={{accordionFunc,toggleSelectionBoxes}}>
         <div 
-            className="sideNav h-full py-4  bg-[var(--bg-300)] flex flex-col justify-center editNav relative "
+            className="sideNav h-full py-4  bg-[var(--bg-300)] flex flex-col justify-between editNav relative "
             ref={editNav}
         >
-          <EditNavStructures/>
-          <EditNavStyles/> 
+          <div className="flex flex-col">
+            <EditNavStructures/>
+            <EditNavStyles/>
+          </div>
+          <button 
+            className=""
+            onClick={()=>{
+              setCurrentStructure(cS=>{
+                cS = structureTemplate
+                console.log(cS) 
+                renderCurrentStructure()
+                return cS
+              })
+            }}
+          >
+            Reset
+          </button>
         </div>
       </EditNavContext.Provider>
       

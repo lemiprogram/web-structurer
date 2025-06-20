@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function setColorPalette(root,colors){
-    if(!colors){
+    if(!colors||!root){
         return
     }
     Object.entries(colors).forEach(color=>root.style.setProperty(color[0],color[1]))

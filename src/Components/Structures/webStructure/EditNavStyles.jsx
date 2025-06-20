@@ -2,7 +2,7 @@ import React, { createContext, useContext, useRef } from 'react'
 import { FaPlus, FaMinus} from 'react-icons/fa'
 import { EditNavContext } from './EditNav'
 import { WebStructureContext } from './WebStructure'
-import EditNavStylesColors from './EditNavStylesColors'
+import EditNavStylesColors from './EditNavStyles/EditNavStylesColors'
 
 export const EditNavStylesContext = createContext()
 function EditNavStyles() {

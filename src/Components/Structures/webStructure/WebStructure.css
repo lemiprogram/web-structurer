@@ -3,7 +3,7 @@
     transition: 1s;
 }
 
-.selection .options li:hover{
+.selection .options .item:hover{
     background: var(--bg-200);
 }
 .item,.option{
@@ -22,4 +22,25 @@
     background-color: var(--bg-100);
     color: var(--text-100);
 }
-
+.edit-btns{
+    opacity: 20%;
+    transition: 2s;
+}
+.edit-btns:hover{
+    opacity: 100%;
+}
+.edit-btn{
+    color:var(--bg-100);
+}
+.selection-boxes{
+    background-color: var(--bg-200);
+    z-index: 10;
+    position: absolute;
+    height: 50vh;
+    border-start-end-radius: 0.75rem ;
+    border-end-end-radius: 0.75rem ;
+}
+.structure-boxes-container{
+    grid-template-columns: repeat(20,1fr);
+    grid-template-rows: repeat(20,1fr);
+}

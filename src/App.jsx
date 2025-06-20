@@ -11,9 +11,10 @@ import Templates from './Components/Pages/Templates'
 import Login from './Components/Pages/Login'
 import WebStructure from './Components/Structures/webStructure/WebStructure';
 import Projects from './Components/Pages/Projects';
+import allMyColors from './allMyColors';
 
 export const StructureContext = createContext() 
-!localStorage.getItem("currentStructure")?localStorage.setItem("currentStructure",JSON.stringify({
+export const structureTemplate = {
       id: uuidv4(),
       name,
       content:{str:{
@@ -26,13 +27,14 @@ export const StructureContext = createContext()
         Modals:null,
     },
     styles:{
-        colorScheme:null,
+        colorScheme:allMyColors()[0],
         fontFamily:null,
         fontSize:null,
     },
     layouts:{},
       }
-})):""
+}
+!localStorage.getItem("currentStructure")?localStorage.setItem("currentStructure",JSON.stringify(structureTemplate)):""
   
 function App() {
   const [currentStructure, setCurrentStructure] = useState(JSON.parse(localStorage.getItem("currentStructure")))

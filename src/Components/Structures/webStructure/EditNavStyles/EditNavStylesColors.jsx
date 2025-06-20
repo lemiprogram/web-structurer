@@ -1,32 +1,32 @@
 import React, { useContext, useEffect } from 'react'
-import { EditNavStylesContext } from './EditNavStyles'
-import setColorPalette from '../../../setColorPalette'
+import { EditNavStylesContext } from '../EditNavStyles'
 import { RxCross2 } from 'react-icons/rx'
-import { WebStructureContext } from './WebStructure'
-import { EditNavContext } from './EditNav'
-import { StructureContext } from '../../../App'
+import { WebStructureContext } from '../WebStructure'
+import { EditNavContext } from '../EditNav'
+import { StructureContext } from '../../../../App'
+import setColorPalette from '../../../../setColorPalette'
 
 
 function EditNavStylesColors() {
     const {toggleSelectionBoxes} = useContext(EditNavContext)
     const {styles,colorsSection} = useContext(EditNavStylesContext)
     const {editNav,page} = useContext(WebStructureContext)
-    const {currentStructure ,setCurrentStructure} = useContext(StructureContext)
-    
+    const {currentStructure,setCurrentStructure} = useContext(StructureContext)
+    useEffect(()=>setColorPalette(page.current,currentStructure.content.styles.colorScheme ),[currentStructure])
   
   return (
     <>
-      <li
-          className='capitalize option indent-4'
+      <div
+          className='capitalize option item indent-4'
           key={"colors" + "-" +styles.id}
           id={"colors" + "-" +styles.id}
       >
-          <p 
-            className="item"
+          <div
+            className=" whitespace-nowrap text-sm"
             onClick={()=>toggleSelectionBoxes(colorsSection.current)}
-          >Colors</p>
+          >Color</div>
           <div 
-              className="hidden selection-boxes bg-[var(--bg-200)]  z-10 absolute h-[50vh] flex flex-col  rounded-e-xl"
+              className="hidden flex flex-col selection-boxes"
               style={{
                   left:editNav.current.offsetWidth-.6+"px",
                   top:"25%"
@@ -40,20 +40,21 @@ function EditNavStylesColors() {
                       onClick={()=>toggleSelectionBoxes()}
                       style={{right:"-15px",top:"-15px"}}
                   ><RxCross2/></div>
-                  <div className="color-boses-container overflow-y-scroll">
+                  <div className="color-boxes-container overflow-y-scroll">
                       {styles.content["colors"].map((colors,cSIndex)=>
                       <div
-                          className="color-boxes  "
+                          className="color-boxes"
                           key={"colors"+cSIndex+styles.id}
                           onClick={()=>{
-                              if(!page.current){
-                                  console.log(page.current)
-                                  return
-                              }
-                                  setCurrentStructure(cS=>{
-                                    cS.content.styles.colorScheme = colors
-                                    return {...cS}
-                                  })
+                            if(!page.current){
+                                return
+                            }
+                            setCurrentStructure(cS=>{
+                                cS.content.styles.colorScheme = colors
+                                localStorage.setItem("currentStructure",JSON.stringify(cS))
+                                setColorPalette(page.current,cS.content.styles.colorScheme )
+                                return {...cS}
+                            })
                           }}
                       >
                           {
@@ -68,7 +69,7 @@ function EditNavStylesColors() {
                       }
                   </div>
           </div>
-      </li>
+      </div>
     </>
   )
 }
