@@ -2,8 +2,8 @@ import React, { createContext, useContext, useRef } from 'react'
 import { WebStructureContext } from './WebStructure'
 import { EditNavContext } from './EditNav'
 import { FaPlus, FaMinus } from 'react-icons/fa'
-import EditNavStructuresHeader from './EditNavStructures/EditNavStructuresHeader'
-import EditNavStructuresNav from './EditNavStructures/EditNavStructuresNav'
+import SemanticStructures from './SemanticStructures'
+import BasicStructures from './BasicStructures'
 
 export const EditNavStructuresContext = createContext()
 function  EditNavStructures() {
@@ -26,8 +26,8 @@ function  EditNavStructures() {
                       {structures.isOpen ?
                         <div className='options flex flex-col list-none'>
                           <EditNavStructuresContext.Provider value={{structures}}>
-                            <EditNavStructuresHeader/>
-                            <EditNavStructuresNav/>
+                            <SemanticStructures/>
+                            <BasicStructures/>
                           </EditNavStructuresContext.Provider>
                         </div>
                       :

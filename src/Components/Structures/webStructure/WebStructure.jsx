@@ -24,9 +24,17 @@ function WebStructure() {
   
   const editNav = useRef(null)
   const page = useRef(null)
-  const headersSection = useRef(null)
+    const headersSection = useRef(null)
 
-
+  useEffect(()=>renderCurrentStructure(),[currentStructure])
+  useEffect(()=>renderCurrentStructure(),[isEditing])
+  function renderCurrentStructure(){
+    localStorage.setItem("currentStructure",JSON.stringify(currentStructure))
+    setColorPalette(page.current,currentStructure.styles.colorScheme )
+    if(!isEditing){
+      setIsSelected(()=>null)
+    }
+  }
 
 const selections={
                           structures:{
@@ -37,34 +45,78 @@ const selections={
                                   id:"headers-"+uuidv4(),
                                   type:"headers",
                                   str:[],
-                                  sty:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red",},
-                                  lay:{},
+                                  sty:{backgroundColor:"var(--bg-200)"},
+                                  lay:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",gridArea:"HD"},
                                   txt:"Header",
                                   con:null,
                                   
                                 },
-                              navs:
+                                navs:
                                 {
                                   id:"navs"+uuidv4(),
+                                  type:"navs",
                                   str:[],
-                                  sty:{display:"grid",justifyContent:"center",fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red",alignItems:"center"},
-                                  lay:{gridColumn:`1/${MAX_WIDTH+1}`, gridRow:`1/3`},
+                                  sty:{backgroundColor:"var(--bg-300)",},
+                                  lay:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",gridArea:"NV"},
                                   txt:"nav",
                                   con:["Home","About","Contact me","Login"],
-                                  hasInput:false,
+                                },
+                                sideNavs:{
+                                  id:"navs"+uuidv4(),
+                                  type:"sideNavs",
+                                  str:[],
+                                  sty:{backgroundColor:"var(--bg-300)",},
+                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                  txt:"Sid",
+                                  con:["Home","About","Contact me","Login"],
                               },
-                              inputs:{
-
+                              footers:{
+                                  id:"navs"+uuidv4(),
+                                  type:"footers",
+                                  str:[],
+                                  sty:{backgroundColor:"var(--bg-300)",},
+                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                  txt:"Sid",
+                                  con:["Home","About","Contact me","Login"],
                               },
-                              buttons:{
-
-                              },
-                              modals:{
-
-                              },
-                              accordions:{
-
-                              }
+                            },
+                            flexibleContent:{
+                                blocks:{
+                                  type:"blocks",
+                                  str:[],
+                                  sty:{backgroundColor:"var(--bg-300)",},
+                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                  txt:"Sid",
+                                  con:["Home","About","Contact me","Login"],
+                              
+                                },
+                                inputs:{
+                                  type:"inputs",
+                                  str:[],
+                                  sty:{backgroundColor:"var(--bg-300)",},
+                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                  txt:"Sid",
+                                  con:["Home","About","Contact me","Login"],
+                              
+                                },
+                                buttons:{
+                                  type:"sbuttons",
+                                  str:[],
+                                  sty:{backgroundColor:"var(--bg-300)",},
+                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                  txt:"Sid",
+                                  con:["Home","About","Contact me","Login"],
+                              
+                                },
+                                Modals:{
+                                  type:"Modals",
+                                  str:[],
+                                  sty:{backgroundColor:"var(--bg-300)",},
+                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                  txt:"Sid",
+                                  con:["Home","About","Contact me","Login"],
+                              
+                                },
                             },
                             isOpen:false
                           },
@@ -143,19 +195,13 @@ const selections={
                 <div
                   className="edit-btn "
                     
-                  onClick={()=>setIsEditing(iE=>{
-                    if(!iE){
-                      setIsSelected(()=>null)
-                    }
-                    return !iE
-                  })
+                  onClick={()=>setIsEditing(iE=>!iE)
                   }
                 ><FaEdit size="23px"/></div>
                 <div
                   className="edit-btn"
                   onClick={()=>setShowFullScreen(fS=>{
                     showFullScreenFunc(!fS)
-                    
                     return !fS
                   })}
                 >{showFullScreen?<MdFullscreen size="30px" />:<MdFullscreenExit size="30px"/>}</div>

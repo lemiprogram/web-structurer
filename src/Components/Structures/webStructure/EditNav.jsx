@@ -13,6 +13,8 @@ function EditNav() {
  const [accordionIsOpen, setAccordionIsOpen] = useState(null)
  const {setCurrentStructure} = useContext(StructureContext)
  const {selections,page,editNav,renderCurrentStructure}  = useContext(WebStructureContext)
+ const [selectionBox, setSelectionBox] = useState(null)
+
   const accordionFunc = (selection)=>{
     setAccordionIsOpen(aO=>{
       if(aO === selection){
@@ -32,19 +34,17 @@ function EditNav() {
       selections[selection].isOpen = false
     })
   }
-  const toggleSelectionBoxes = (selected=null)=>{
-    document.querySelectorAll(".selection-boxes").forEach(sB=>{
-      if(sB===selected){
-        sB.classList.toggle("hidden")
-        return
-      }
-      sB.classList.add("hidden")
-    })
+  const toggleSelectionBoxes = (componentName=null)=>{
+    if(!componentName||selectionBox === componentName){
+      setSelectionBox(()=>null)
+      return
+    }
+      setSelectionBox((()=>componentName))
   }
   
   return (
     <>
-      <EditNavContext.Provider value={{accordionFunc,toggleSelectionBoxes}}>
+      <EditNavContext.Provider value={{accordionFunc,toggleSelectionBoxes,selectionBox,setSelectionBox}}>
         <div 
             className="sideNav h-full py-4  bg-[var(--bg-300)] flex flex-col justify-between editNav relative "
             ref={editNav}

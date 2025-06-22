@@ -21,7 +21,7 @@ export const structureTemplate = {
           headers:{
                     id:"headers-"+uuidv4(),
                     type:"headers",
-                    str:[/* {
+                    str:[{
                       id:"dor-"+uuidv4(),
                       type:"doors",
                       str:[],
@@ -49,9 +49,9 @@ export const structureTemplate = {
                     txt:["Chair"],
                     con:null,
                     
-                    } */
+                    }
                   ],
-                      sty:{fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red"},
+                    sty:{fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red"},
                     lay:{display:"flex",justifyContent:"center",alignItems:"center",},
                     func:{
                       onClick:null,

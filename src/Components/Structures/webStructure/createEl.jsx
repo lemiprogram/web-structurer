@@ -7,15 +7,8 @@ const CreateEl = ({structure})=>{
     const str = useRef(null)
     const {isEditing,isSelected, setIsSelected} = useContext(WebStructureContext)
     if(!structure){
-        return console.warn("No Structure")
-        }
-    const showEditModal = event=>{
-        if(!event.id){
-            showEditModal(event.parentElement)
-            return
-        }
-        setIsSelected(()=>event) 
-    }
+        return
+     }
     return (
         <>
             <div
@@ -34,7 +27,7 @@ const CreateEl = ({structure})=>{
                 id={structure.id}
             >
                 {structure["txt"] ? <div className="flex flex-col" >{structure["txt"].map( item=> <li key={uuidv4()}> {item} </li> )}</div> : "" }
-                {structure["str"] ? structure["str"].map(item=><CreateEl structure={structure["str"]}/>) : "" }
+                {structure["str"] ? structure["str"].map(item=><CreateEl key={uuidv4()} structure={structure["str"]}/>) : "" }
                 {structure["con"] ? <div className="flex flex-row" >{structure["con"].map( item=> <li key={uuidv4()}> {item} </li> )}</div> : "" }
             </div>
             <EditModal structure={isSelected} type={structure["type"]}/>
