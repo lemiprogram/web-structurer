@@ -21,45 +21,14 @@ export const structureTemplate = {
           headers:{
                     id:"headers-"+uuidv4(),
                     type:"headers",
-                    str:[{
-                      id:"dor-"+uuidv4(),
-                      type:"doors",
-                      str:[],
-                      sty:{display:"flex",justifyContent:"center",alignItems:"center",fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red",},
-                      lay:{},
-                      func:{
-                        onClick:null,
-                        onMouseOver:null,
-                        onMouseOut:null,
-                      },
-                      txt:["Door"],
-                      con:null,
-                    }
-                    ,{
-                    id:"chair-"+uuidv4(),
-                    type:"chair",
                     str:[],
-                    sty:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red",},
-                    lay:{},
-                    func:{
-                      onClick:null,
-                      onMouseOver:null,
-                      onMouseOut:null,
-                    },
-                    txt:["Chair"],
-                    con:null,
-                    
-                    }
-                  ],
-                    sty:{fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red"},
+                    sty:{backgroundColor:"var(--bg-200)",width:'100vw',height:"50px",color:"red"},
                     lay:{display:"flex",justifyContent:"center",alignItems:"center",},
                     func:{
                       onClick:null,
                       onMouseOver:null,
                       onMouseOut:null,
                     },
-                    txt:["Header"],
-                    con:null,
                     
                   },
           navs:null,

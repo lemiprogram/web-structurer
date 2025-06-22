@@ -26,11 +26,13 @@ const CreateEl = ({structure})=>{
                 }}
                 id={structure.id}
             >
-                {structure["txt"] ? <div className="flex flex-col" >{structure["txt"].map( item=> <li key={uuidv4()}> {item} </li> )}</div> : "" }
                 {structure["str"] ? structure["str"].map(item=><CreateEl key={uuidv4()} structure={structure["str"]}/>) : "" }
-                {structure["con"] ? <div className="flex flex-row" >{structure["con"].map( item=> <li key={uuidv4()}> {item} </li> )}</div> : "" }
             </div>
-            <EditModal structure={isSelected} type={structure["type"]}/>
+            {isSelected===structure?
+                <EditModal structure={isSelected} type={structure["type"]}/>
+            :
+                ""
+            }
         </>
     )
 }

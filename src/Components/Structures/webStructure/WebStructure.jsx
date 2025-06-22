@@ -47,8 +47,6 @@ const selections={
                                   str:[],
                                   sty:{backgroundColor:"var(--bg-200)"},
                                   lay:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",gridArea:"HD"},
-                                  txt:"Header",
-                                  con:null,
                                   
                                 },
                                 navs:
@@ -58,8 +56,6 @@ const selections={
                                   str:[],
                                   sty:{backgroundColor:"var(--bg-300)",},
                                   lay:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",gridArea:"NV"},
-                                  txt:"nav",
-                                  con:["Home","About","Contact me","Login"],
                                 },
                                 sideNavs:{
                                   id:"navs"+uuidv4(),
@@ -67,8 +63,6 @@ const selections={
                                   str:[],
                                   sty:{backgroundColor:"var(--bg-300)",},
                                   lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
-                                  txt:"Sid",
-                                  con:["Home","About","Contact me","Login"],
                               },
                               footers:{
                                   id:"navs"+uuidv4(),
@@ -76,8 +70,6 @@ const selections={
                                   str:[],
                                   sty:{backgroundColor:"var(--bg-300)",},
                                   lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
-                                  txt:"Sid",
-                                  con:["Home","About","Contact me","Login"],
                               },
                             },
                             flexibleContent:{
@@ -86,8 +78,6 @@ const selections={
                                   str:[],
                                   sty:{backgroundColor:"var(--bg-300)",},
                                   lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
-                                  txt:"Sid",
-                                  con:["Home","About","Contact me","Login"],
                               
                                 },
                                 inputs:{
@@ -95,8 +85,6 @@ const selections={
                                   str:[],
                                   sty:{backgroundColor:"var(--bg-300)",},
                                   lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
-                                  txt:"Sid",
-                                  con:["Home","About","Contact me","Login"],
                               
                                 },
                                 buttons:{
@@ -104,8 +92,6 @@ const selections={
                                   str:[],
                                   sty:{backgroundColor:"var(--bg-300)",},
                                   lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
-                                  txt:"Sid",
-                                  con:["Home","About","Contact me","Login"],
                               
                                 },
                                 Modals:{
@@ -113,8 +99,6 @@ const selections={
                                   str:[],
                                   sty:{backgroundColor:"var(--bg-300)",},
                                   lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
-                                  txt:"Sid",
-                                  con:["Home","About","Contact me","Login"],
                               
                                 },
                             },
