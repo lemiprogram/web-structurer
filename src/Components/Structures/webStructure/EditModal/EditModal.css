@@ -1,0 +1,120 @@
+.editingModal{
+    width: 500px;
+}
+.editModalBtns{
+    background-color: var(--faded-grey);
+    cursor: move;
+    
+}
+.editModalBtn{
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: var(--bg-200);
+    color: var(--text-100);
+    
+}
+.editModalBtnActive {
+    border-bottom:2px solid var(--bg-100);
+    background-color: var(--primary-200);
+    color: var(--bg-100);
+}
+.editModal-section{
+    display: none;
+}
+.editModalActive-section{
+    background-color: var(--bg-300);
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    padding: 20px;
+    justify-content: space-around;
+
+}
+.editModal-items{
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 300px;
+    padding-block:20px;
+    scrollbar-width: none;
+    max-width: fit-content;
+}
+.editModal-item{
+    padding: 20px;
+    background-color: var(--bg-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px;
+    gap: 20px;
+    width: fit-content;
+}
+.btn{
+    padding:7px;
+    background-color: var(--primary-100);
+    border-radius: 4px;
+    color: var(--bg-100);
+    cursor: pointer;
+    
+}
+.btns{
+    display: flex;
+    gap: 20px;
+}
+
+.add-btn{
+    padding: 5px 20px;
+    background-color: var(--primary-100);
+    color:var(--text-100);
+    font-weight: 600;
+    justify-self: end;
+    cursor: pointer;
+}
+.modal-body{
+    display: grid;
+    place-content: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--faded-black);
+}
+.modal{
+    background-color: var(--bg-200);
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    min-width: 400px;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.modal .inp{
+    display: flex;
+    padding: 20px;
+}
+.modal input{
+    background-color: inherit;
+    text-align: center;
+    background-color: var(--bg-200);
+    border: 1px solid var(--text-200);
+    border-radius: 20px;
+    outline: none;
+    
+}
+.modal option{
+    background-color: var(--bg-200);
+}
+.modal select{
+    background-color: var(--bg-200);
+    border-right-color: transparent;
+    padding: 4px 20px;
+    text-transform: capitalize;
+    text-align: center;
+}
+.hide{
+    display: none;
+}

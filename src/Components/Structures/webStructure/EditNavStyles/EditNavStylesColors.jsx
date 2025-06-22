@@ -12,7 +12,7 @@ function EditNavStylesColors() {
     const {styles,colorsSection} = useContext(EditNavStylesContext)
     const {editNav,page} = useContext(WebStructureContext)
     const {currentStructure,setCurrentStructure} = useContext(StructureContext)
-    useEffect(()=>setColorPalette(page.current,currentStructure.content.styles.colorScheme ),[currentStructure])
+    useEffect(()=>setColorPalette(page.current,currentStructure.styles.colorScheme ),[currentStructure])
   
   return (
     <>
@@ -50,9 +50,9 @@ function EditNavStylesColors() {
                                 return
                             }
                             setCurrentStructure(cS=>{
-                                cS.content.styles.colorScheme = colors
+                                cS.styles.colorScheme = colors
                                 localStorage.setItem("currentStructure",JSON.stringify(cS))
-                                setColorPalette(page.current,cS.content.styles.colorScheme )
+                                setColorPalette(page.current,cS.styles.colorScheme )
                                 return {...cS}
                             })
                           }}

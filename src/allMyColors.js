@@ -85,7 +85,8 @@ const allMyColors = ()=>[
                                 "--bg-300":"#2c2c2c",
                             },
 ]
-/*               --primary-100:#FFFFFF;
+/*  
+    --primary-100:#FFFFFF;
     --primary-200:#e0e0e0;
     --primary-300:#9b9b9b;
     --accent-100:#7F7F7F;
@@ -95,9 +96,6 @@ const allMyColors = ()=>[
     --bg-100:#000000;
     --bg-200:#161616;
     --bg-300:#2c2c2c;
-      
-      
-      
-       */
+*/
 
 export default allMyColors;

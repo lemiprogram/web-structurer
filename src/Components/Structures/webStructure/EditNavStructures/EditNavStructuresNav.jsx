@@ -13,7 +13,7 @@ function EditNavStructuresNav() {
     return (
         <>
         <div
-            className='capitalize option item indent-4 '
+            className='capitalize option item indent-4 structure-selection '
             key={"navs" + "-" +structures.id}
             id={"navs" + "-" +structures.id}
             onMouseDown={()=>

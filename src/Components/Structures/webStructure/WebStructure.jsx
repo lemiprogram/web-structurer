@@ -1,44 +1,57 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import './WebStructure.css'
 import { v4 as uuidv4 } from 'uuid';
-import { FaBars, FaGreaterThan } from 'react-icons/fa'
+import { FaBars, FaEdit, FaGreaterThan } from 'react-icons/fa'
 import { StructureContext } from '../../../App'
 import Accordion from '../StaticStructures/Accordion'
 import EditNav from './EditNav';
 import { MdFullscreen, MdFullscreenExit } from 'react-icons/md';
 import allMyColors from '../../../allMyColors';
 import setColorPalette from '../../../setColorPalette';
-import CreateEl from './createEl';
+import CreateEl from './CreateEl';
 import Header from '../StaticStructures/Header';
 
 export const WebStructureContext = createContext()
 const MAX_WIDTH = 20
 const MAX_HEIGHT = 20
+
+function WebStructure() {
+  const [isEditing,setIsEditing] = useState(false)
+  const [showEditNav, setShowEditNav] = useState(true)
+  const [showFullScreen, setShowFullScreen] = useState(true)
+  const [isSelected, setIsSelected] = useState(null)
+  const {currentStructure } = useContext(StructureContext)
+  
+  const editNav = useRef(null)
+  const page = useRef(null)
+  const headersSection = useRef(null)
+
+
+
 const selections={
                           structures:{
                             id:uuidv4(),
                             content:{
                               headers:
                                 {
-                                  id:uuidv4(),
-                                  str:{},
-                                  sty:{display:"grid",gridTemplateColumns:MAX_WIDTH,gridTemplateRows:MAX_HEIGHT,justifyContent:"center",fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red",alignContent:"center"},
-                                  lay:{gridColumn:`1/${MAX_WIDTH+1}`, gridRow:`1/3`},
+                                  id:"headers-"+uuidv4(),
+                                  type:"headers",
+                                  str:[],
+                                  sty:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red",},
+                                  lay:{},
                                   txt:"Header",
                                   con:null,
-                                  hasNav:false,
+                                  
                                 },
                               navs:
                                 {
-                                id:uuidv4(),
-                                str:()=>selections.structures.content.navs.hasInput?{
-                                  inp:()=>selections.structures.content.inputs
-                                }:null,
-                                sty:{display:"grid",justifyContent:"center",fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red",alignItems:"center"},
-                                lay:{gridColumn:`1/${MAX_WIDTH+1}`, gridRow:`1/3`},
-                                txt:"nav",
-                                con:["Home","About","Contact me","Login"],
-                                hasInput:false,
+                                  id:"navs"+uuidv4(),
+                                  str:[],
+                                  sty:{display:"grid",justifyContent:"center",fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red",alignItems:"center"},
+                                  lay:{gridColumn:`1/${MAX_WIDTH+1}`, gridRow:`1/3`},
+                                  txt:"nav",
+                                  con:["Home","About","Contact me","Login"],
+                                  hasInput:false,
                               },
                               inputs:{
 
@@ -63,23 +76,6 @@ const selections={
                             isOpen:false
                           }
   }
-function WebStructure() {
-  const [isEditing,setIsEditing] = useState(true)
-  const [showEditNav, setShowEditNav] = useState(true)
-  const [showFullScreen, setShowFullScreen] = useState(true)
-
-  const {currentStructure } = useContext(StructureContext)
-  
-  const editNav = useRef(null)
-  const page = useRef(null)
-
-  useEffect(()=>renderCurrentStructure(),[currentStructure])
-  function renderCurrentStructure(){
-    localStorage.setItem("currentStructure",JSON.stringify(currentStructure))
-    setColorPalette(page.current,currentStructure.content.styles.colorScheme )
-  }
-
-
   
   const showFullScreenFunc = (fS)=>{
     if(!editNav.current){
@@ -123,7 +119,7 @@ function WebStructure() {
   }
   return (
     <>  
-      <WebStructureContext.Provider value={{selections, page,editNav,renderCurrentStructure}}>
+      <WebStructureContext.Provider value={{selections, page,editNav,headersSection,isEditing,isSelected,setIsSelected}}>
         <div className="flex page">
           
             <EditNav />
@@ -136,24 +132,37 @@ function WebStructure() {
                     gridTemplateRows:` repeat(${MAX_HEIGHT},1fr)`,
                   }}
           >
-              <div className="edit-btns  flex absolute bottom-0 right-0 items-center bg-[var(--text-100)] w-[400px] px-5 justify-around rounded-full">
+              <div className="edit-btns  flex absolute bottom-0 right-0 items-center bg-[var(--text-100)] w-[400px] px-5 justify-evenly rounded-full">
                 <div
-                  className="btn edit-btn "
+                  className="edit-btn "
                   onClick={()=>setShowEditNav(sE=>{
                     showEditNavFunc(!sE)
                     return !sE
                   })}
                 ><FaBars size="23px"/></div>
                 <div
-                  className="btn edit-btn"
+                  className="edit-btn "
+                    
+                  onClick={()=>setIsEditing(iE=>{
+                    if(!iE){
+                      setIsSelected(()=>null)
+                    }
+                    return !iE
+                  })
+                  }
+                ><FaEdit size="23px"/></div>
+                <div
+                  className="edit-btn"
                   onClick={()=>setShowFullScreen(fS=>{
                     showFullScreenFunc(!fS)
+                    
                     return !fS
                   })}
                 >{showFullScreen?<MdFullscreen size="30px" />:<MdFullscreenExit size="30px"/>}</div>
 
               </div>
-              <Header structure={currentStructure.content.str.headers}/>
+              {isEditing?<div className="absolute top-2 right-2 bg-[var(--text-100)] text-[var(--bg-100)] px-4 cursor-default py-2 rounded-full opacity-20">Edit Mode</div>:""}
+             {Object.keys(currentStructure["content"]).map(item=><CreateEl key={uuidv4()} structure={currentStructure["content"][item]}/>)}
           </div>
         </div>
       </WebStructureContext.Provider>

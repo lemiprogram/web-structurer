@@ -30,7 +30,9 @@
     opacity: 100%;
 }
 .edit-btn{
+    padding: 5px;
     color:var(--bg-100);
+    cursor: pointer;
 }
 .selection-boxes{
     background-color: var(--bg-200);
@@ -43,4 +45,12 @@
 .structure-boxes-container{
     grid-template-columns: repeat(20,1fr);
     grid-template-rows: repeat(20,1fr);
+}
+.editModalBtn{
+    background-color: var(--accent-100) ;
+    color: white;
+    
+}
+.editModalBtnActive{
+    background-color: var(--faded-black);
 }

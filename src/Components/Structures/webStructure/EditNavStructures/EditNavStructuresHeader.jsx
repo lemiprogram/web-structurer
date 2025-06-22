@@ -7,9 +7,8 @@ import { EditNavStructuresContext } from '../EditNavStructures'
 function EditNavStructuresHeader() {
     const {toggleSelectionBoxes} = useContext(EditNavContext)
     const {structures} = useContext(EditNavStructuresContext)
-    const {editNav,page} = useContext(WebStructureContext)
+    const {editNav,page,headersSection} = useContext(WebStructureContext)
     const {setCurrentStructure} = useContext(StructureContext)
-    const headersSection = useRef(null)
     const {headers} = structures.content
     return (
         <>
@@ -17,18 +16,20 @@ function EditNavStructuresHeader() {
             className='capitalize option item indent-4 '
             key={"headers" + "-" +structures.id}
             id={"headers" + "-" +structures.id}
+            ref={headersSection}
             onMouseDown={()=>
                 setCurrentStructure(cS=>{
                     console.log(headers.id)
                     if( cS.content.str.headers && cS.content.str.headers.id === headers.id){
                         cS.content.str.headers = null;
+                        headersSection.current.style.backgroundColor="var(--bg-300)"
                     }
                     
                     else{
                         cS.content.str.headers = headers;
+                        headersSection.current.style.backgroundColor="var(--accent-100)"
                     }
                     localStorage.setItem("currentStructure",JSON.stringify(cS))
-
                     return {...cS}
                 })
             }
@@ -41,7 +42,7 @@ function EditNavStructuresHeader() {
 )
 }
 
-export default EditNavStructuresHeader
+export default EditNavStructuresHeader 
 
 /* <div 
                   className="hidden flex flex-col selection-boxes"

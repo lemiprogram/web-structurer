@@ -16,23 +16,69 @@ import allMyColors from './allMyColors';
 export const StructureContext = createContext() 
 export const structureTemplate = {
       id: uuidv4(),
-      name,
-      content:{str:{
-        headers:null,
-        navs:null,
-        sideNavs:null,
-        blocks:null,
-        inputs:null,
-        buttons:null,
-        Modals:null,
-    },
+      content:{
+        
+          headers:{
+                    id:"headers-"+uuidv4(),
+                    type:"headers",
+                    str:[/* {
+                      id:"dor-"+uuidv4(),
+                      type:"doors",
+                      str:[],
+                      sty:{display:"flex",justifyContent:"center",alignItems:"center",fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red",},
+                      lay:{},
+                      func:{
+                        onClick:null,
+                        onMouseOver:null,
+                        onMouseOut:null,
+                      },
+                      txt:["Door"],
+                      con:null,
+                    }
+                    ,{
+                    id:"chair-"+uuidv4(),
+                    type:"chair",
+                    str:[],
+                    sty:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red",},
+                    lay:{},
+                    func:{
+                      onClick:null,
+                      onMouseOver:null,
+                      onMouseOut:null,
+                    },
+                    txt:["Chair"],
+                    con:null,
+                    
+                    } */
+                  ],
+                      sty:{fontSize:"2em", backgroundColor:"var(--bg-200)",color:"red"},
+                    lay:{display:"flex",justifyContent:"center",alignItems:"center",},
+                    func:{
+                      onClick:null,
+                      onMouseOver:null,
+                      onMouseOut:null,
+                    },
+                    txt:["Header"],
+                    con:null,
+                    
+                  },
+          navs:null,
+          sideNavs:null,
+          footers:null,
+          
+        },
+      flexibleContent:{
+          blocks:[],
+          inputs:[],
+          buttons:[],
+          Modals:[],
+      },
     styles:{
         colorScheme:allMyColors()[0],
         fontFamily:null,
         fontSize:null,
     },
     layouts:{},
-      }
 }
 !localStorage.getItem("currentStructure")?localStorage.setItem("currentStructure",JSON.stringify(structureTemplate)):""
   
