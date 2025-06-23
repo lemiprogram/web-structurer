@@ -22,43 +22,15 @@ function NavBar() {
                         <div className="title">Home</div>
                     </div>
                 </NavLink>
-                <NavLink to="/projects">
-                    <div className="nav-item ">
-                        <div className="icon">
-                            <FaFolder/>
-                        </div>
-                        <div className="title">Projects</div>
-                    </div>
-                </NavLink>
                 <NavLink to="/create">
                     <div className="nav-item 
                     ">
                             <IoMdAddCircle size='x'/>
                     </div>
                 </NavLink>
-                <NavLink to="/templates">
-                    <div className="nav-item ">
-                        <div className="icon">
-                            <GrTemplate/>
-                        </div>
-                        <div className="title">Templates</div>
-                    </div>
-                </NavLink>
+                
             </div>
-            <div className="nav-items ">
-                <NavLink to="/profile">
-                    <div className="nav-item ">
-                        <div className="icon">
-                            <FaUser/>
-                        </div>
-                    </div>
-                </NavLink>
-                <NavLink to="/settings">
-                    <div className="nav-item ">
-                            <IoSettings/>
-                    </div>
-                </NavLink>
-            </div>
+            
         </div>
     </>
   )

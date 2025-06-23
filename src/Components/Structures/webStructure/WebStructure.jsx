@@ -10,6 +10,7 @@ import allMyColors from '../../../allMyColors';
 import setColorPalette from '../../../setColorPalette';
 import CreateEl from './CreateEl';
 import Header from '../StaticStructures/Header';
+import allMyGridAreas from '../../../allMyGridAreas';
 
 export const WebStructureContext = createContext()
 const MAX_WIDTH = 20
@@ -40,65 +41,67 @@ const selections={
                           structures:{
                             id:uuidv4(),
                             content:{
-                              headers:
-                                {
+                              header:
+                               {
                                   id:"headers-"+uuidv4(),
-                                  type:"headers",
+                                  type:"header",
                                   str:[],
-                                  sty:{backgroundColor:"var(--bg-200)"},
-                                  lay:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",gridArea:"HD"},
+                                  sty:{backgroundColor:"var(--bg-200)",width:"100vw",height:"minContent",padding:"20px"},
+                                  lay:{display:"flex",justifyContent:"spaceBetween",alignItems:"center"},
+                                  txt:"Header",
                                   
                                 },
-                                navs:
-                                {
+                                nav:
+                               {
                                   id:"navs"+uuidv4(),
-                                  type:"navs",
+                                  type:"nav",
                                   str:[],
-                                  sty:{backgroundColor:"var(--bg-300)",},
-                                  lay:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",gridArea:"NV"},
+                                  sty:{backgroundColor:"var(--bg-300)",width:"90%",height:"minContent",borderRadius:"20px",paddingInline:"20px",paddingBlock:"10px"},
+                                  lay:{display:"flex",justifyContent:"spaceBetween",alignItems:"center",alignSelf:"center"},
+                                  txt:"Nav",
                                 },
-                                sideNavs:{
+                              footer:{
                                   id:"navs"+uuidv4(),
-                                  type:"sideNavs",
+                                  type:"footer",
                                   str:[],
-                                  sty:{backgroundColor:"var(--bg-300)",},
-                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
-                              },
-                              footers:{
-                                  id:"navs"+uuidv4(),
-                                  type:"footers",
-                                  str:[],
-                                  sty:{backgroundColor:"var(--bg-300)",},
-                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                  sty:{backgroundColor:"var(--bg-200)",},
+                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",width:"100%",padding:"0px",justifySelf:"end"},
+                                  txt:"Footer",
                               },
                             },
                             flexibleContent:{
-                                blocks:{
-                                  type:"blocks",
+                                block:{
+                                  type:"block",
                                   str:[],
-                                  sty:{backgroundColor:"var(--bg-300)",},
-                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                  sty:{backgroundColor:"inherit",width:"100px",height:"100px",},
+                                  lay:{display:"block",justifyContent:"center",alignItems:"center",},
+                                  txt:"block",
                               
                                 },
-                                inputs:{
-                                  type:"inputs",
-                                  str:[],
-                                  sty:{backgroundColor:"var(--bg-300)",},
-                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                input:{
+                                  type:"input",
+                                  sty:{backgroundColor:"var(--bg-200)",borderRadius:"20px",paddingInline:"10px",paddingBlock:"5px"},
+                                  lay:{},
                               
                                 },
-                                buttons:{
-                                  type:"sbuttons",
-                                  str:[],
-                                  sty:{backgroundColor:"var(--bg-300)",},
-                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                button:{
+                                  type:"button",
+                                  str:[{
+                                    type:"button",
+                                    sty:{backgroundColor:"var(--primary-100)",},
+                                    lay:{display:"inline",justifyContent:"start",alignItems:"center",},
+                                    txt:"button",
+                                  }],
+                                  sty:{backgroundColor:"inherit",},
+                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",},
                               
                                 },
-                                Modals:{
-                                  type:"Modals",
+                                list:{
+                                  type:"list",
                                   str:[],
-                                  sty:{backgroundColor:"var(--bg-300)",},
-                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",gridArea:"SN"},
+                                  sty:{backgroundColor:"inherit",textIndent:"20px",color:"inherit",},
+                                  lay:{display:"flex",justifyContent:"start",alignItems:"center",},
+                                  con:["item1","item2","item3"],
                               
                                 },
                             },
@@ -110,8 +113,11 @@ const selections={
                               colors:allMyColors(),
                             },
                             isOpen:false
-                          }
+                          },
+                          
+                          
   }
+  console.log(Object.keys(currentStructure["flexibleContent"]))
   
   const showFullScreenFunc = (fS)=>{
     if(!editNav.current){
@@ -163,10 +169,7 @@ const selections={
           <div 
             className="page grid relative"
             ref={page}
-            style={{
-                    gridTemplateColumns:` repeat(${MAX_WIDTH},auto)`,
-                    gridTemplateRows:` repeat(${MAX_HEIGHT},1fr)`,
-                  }}
+            style={{display:"flex",flexDirection:"column",position:"relative"}}
           >
               <div className="edit-btns  flex absolute bottom-0 right-0 items-center bg-[var(--text-100)] w-[400px] px-5 justify-evenly rounded-full">
                 <div
@@ -193,6 +196,7 @@ const selections={
               </div>
               {isEditing?<div className="absolute top-2 right-2 bg-[var(--text-100)] text-[var(--bg-100)] px-4 cursor-default py-2 rounded-full opacity-20">Edit Mode</div>:""}
              {Object.keys(currentStructure["content"]).map(item=><CreateEl key={uuidv4()} structure={currentStructure["content"][item]}/>)}
+             
           </div>
         </div>
       </WebStructureContext.Provider>

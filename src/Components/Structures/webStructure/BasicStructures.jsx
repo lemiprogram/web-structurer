@@ -35,14 +35,14 @@ function BasicStructures() {
                     onClick={()=>toggleSelectionBoxes()}
                     style={{right:"-15px",top:"-15px"}}
                 ><RxCross2/></div>
-                <div className="color-boxes-container boxes-container overflow-y-scroll">
+                <div className="boxes-container overflow-y-scroll">
                     {Object.keys(selections["structures"]["flexibleContent"]).map(item=>
                         <div
                             key={uuidv4()}
                             className='content-boxes'
                             onClick={()=>setCurrentStructure(cS=>{
-                                cS["flexibleContent"][item].push(selections["structures"]["flexibleContent"][item])
-                                return cS
+                                cS["flexibleContent"].push(selections["structures"]["flexibleContent"][item])
+                                return {...cS}
                             })}
 
                         >

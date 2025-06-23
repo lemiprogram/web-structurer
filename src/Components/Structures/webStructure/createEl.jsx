@@ -9,6 +9,52 @@ const CreateEl = ({structure})=>{
     if(!structure){
         return
      }
+     if(structure["type"]==="input"){
+        return (
+                <>
+                    <input 
+                        type='text'
+                        style={{...structure["sty"],...structure["lay"]}}
+                        ref={str}
+                        onClick={e=>{
+                            if(isEditing){
+                                setIsSelected(iS=>iS !== structure ? structure : null)
+                                return
+                            }
+                        }}
+                    
+                    />
+                    {isSelected===structure?
+                        <EditModal structure={isSelected} type={structure["type"]}/>
+                    :
+                        ""
+                    }
+                </>
+        )
+
+     }
+     if(structure["type"]==="button"){
+        return (
+                <>
+                    <button
+                    style={{...structure["sty"],...structure["lay"]}}
+                    ref={str}
+                    onClick={e=>{
+                        if(isEditing){
+                            setIsSelected(iS=>iS !== structure ? structure : null)
+                            return
+                        }
+                    }}
+                ></button>
+                    {isSelected===structure?
+                        <EditModal structure={isSelected} type={structure["type"]}/>
+                    :
+                        ""
+                    }
+                </>
+        )
+
+     }
     return (
         <>
             <div
@@ -19,14 +65,14 @@ const CreateEl = ({structure})=>{
                         setIsSelected(iS=>iS !== structure ? structure : null)
                         return
                     }
-                    if(structure["func"]["onclick"]){
-                        structure["func"]["onclick"]()
-                        return
-                    }
                 }}
                 id={structure.id}
-            >
-                {structure["str"] ? structure["str"].map(item=><CreateEl key={uuidv4()} structure={structure["str"]}/>) : "" }
+            >   
+                {structure["con"]&&structure["type"]!=="list"? <div>{structure["txt"]}</div> : " "}
+                {structure["txt"]&&structure["type"]!=="button"? <div>{structure["txt"]}</div>:"" }
+                {structure["type"]==="button"? <button >{structure["txt"]}</button>:""}
+                {structure["type"]==="list"?<ul>{structure["con"].map(item=><li key={uuidv4()}>{item}</li>)}</ul>:""}
+                {structure["str"]?structure["str"].map((item)=><CreateEl key={uuidv4()} structure={item["str"]}/>):"" }
             </div>
             {isSelected===structure?
                 <EditModal structure={isSelected} type={structure["type"]}/>

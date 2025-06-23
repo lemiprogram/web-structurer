@@ -10,7 +10,7 @@ import { StructureContext } from '../../../../App'
 function EditModal({structure,type}) {
     const {currentStructure,setCurrentStructure} = useContext(StructureContext)
     const [editModal,setEditModal] = useState({
-        position:null,
+        positionX:null,
         positionY:null,
         section:null,
     })
@@ -31,8 +31,6 @@ function EditModal({structure,type}) {
             }
             document.querySelector("."+btn.id).classList.remove("editModalActive-section")
             btn.classList.remove("editModalBtnActive")
-            
-
         })
     }
     const showModal = modal=>{
@@ -51,10 +49,12 @@ function EditModal({structure,type}) {
         })
         closeModal(modal)
     }
+    const addStructureToCurrentStructure = (modal,entry)=>{
 
-  return (
+    }
+  return ( 
     <>
-      <div className="editingModal absolute top-0 right-0 flex flex-col p-5 rounded-"
+      <div className="editingModal absolute top-0 right-0 flex flex-col p-5 "
         ref={editingModal}
       >
           <div className="editModalBtns flex jusfity-start"
@@ -82,18 +82,42 @@ function EditModal({structure,type}) {
               >
                   layouts
               </div>
-              <div
-                  className="functions-section-btn capitalize  editModalBtn "
-                  id='functions-section'
-                  onClick={(e)=>toggleEditModal(e.target.id)}
-              >
-                  functions
-              </div>
               
           </div>
-          <div className="editModal-section  structures-section editModalActive-section bg-red-600">
+          <div className="editModal-section  structures-section editModalActive-section bg-red-600 ">
             <div className="sub-heading">Add, Edit and Remove Structures</div>
+            {structure["txt"]?<div className="inp">
+                <label >Inner Text:</label>
+                <input type="text"
+                    className='bg-inherit text-center'
+                    defaultValue={structure["txt"]}
+                    onKeyDown={e=>{
+                        if(e.key === "Enter"){
+                            setCurrentStructure(cS=>{
+                            cS.content[type]["txt"] = e.target.value
+                            return {...cS}
+                        })
+                        }
+                    }}
+                />
+            </div>:""}
+            {structure["con"]?<div className="inp">
+                <label >Contents :</label>
+                <input type="text"
+                    className='bg-inherit text-center'
+                    defaultValue={structure["con"].join(",")}
+                    onKeyDown={e=>{
+                        if(e.key === "Enter"){
+                            setCurrentStructure(cS=>{
+                            cS.content[type]["con"] = e.target.value.split(",")
+                            return {...cS}
+                        })
+                        }
+                    }}
+                />
+            </div>:""}
             <div className="editModal-items">
+
             </div>
             <div className="add-btnSection flex justify-center">
                 <div className="add-btn rounded-full">Add Structures</div>
@@ -112,7 +136,12 @@ function EditModal({structure,type}) {
                                 className='bg-inherit capitalize text-center rounded-full w-[180px]'
                                 placeholder={key}
                                 onKeyDown={e=>e.key === "Enter"?setCurrentStructure(cS=>{
-                                        cS.content[type]["sty"][key] = e.target.value
+                                        if(cS.content[type]){
+                                            cS.content[type]["sty"][key] = e.target.value
+                                            return {...cS}
+
+                                        }
+                                        cS.flexibleContent[type]["sty"][key] = e.target.value
                                         return {...cS}
                                         
                                 }):""}
@@ -227,15 +256,7 @@ function EditModal({structure,type}) {
                 </div>
             </div>
           </div>
-          <div className="editModal-section functions-section  bg-yellow-600">
-            <div className="sub-heading">Add, Edit and Remove Functions</div>
-            <div className="editModal-items">
-                <div className="editModal-item"></div>
-            </div>
-            <div className="add-btnSection flex justify-center">
-                <div className="add-btn rounded-full">Add Functions</div>
-            </div>
-          </div>
+          
       </div>
     </>
   )

@@ -41,7 +41,11 @@ function SemanticStructures() {
                             key={uuidv4()}
                             className='content-boxes'
                             onClick={()=>setCurrentStructure(cS=>{
-                                cS["content"][item] = selections["structures"]["content"][item]
+                                if(!cS["content"][item]){
+                                    cS["content"][item] = selections["structures"]["content"][item]
+                                    return{...cS}
+                                }
+                                cS["content"][item] = null
                                 return {...cS}
                             })}
 

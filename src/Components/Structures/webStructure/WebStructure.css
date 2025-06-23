@@ -19,6 +19,8 @@
 
 }
 .page{
+    overflow-y: scroll;
+    overflow-x: hidden;
     background-color: var(--bg-100);
     color: var(--text-100);
 }
@@ -72,4 +74,17 @@
 }
 .content-option:hover{
     background-color: var(--bg-200);
+}
+.selection-boxes :has(.boxes-container){
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.structures-section .inp{
+    display: flex;
+    gap: 20px;
+}
+.structures-section .inp input{
+    border-radius: 20px;
+    border: 1px solid;
 }

@@ -12,42 +12,30 @@ import Login from './Components/Pages/Login'
 import WebStructure from './Components/Structures/webStructure/WebStructure';
 import Projects from './Components/Pages/Projects';
 import allMyColors from './allMyColors';
+import allMyGridAreas from './allMyGridAreas';
 
 export const StructureContext = createContext() 
 export const structureTemplate = {
       id: uuidv4(),
       content:{
         
-          headers:{
-                    id:"headers-"+uuidv4(),
-                    type:"headers",
-                    str:[],
-                    sty:{backgroundColor:"var(--bg-200)",width:'100vw',height:"50px",color:"red"},
-                    lay:{display:"flex",justifyContent:"center",alignItems:"center",},
-                    func:{
-                      onClick:null,
-                      onMouseOver:null,
-                      onMouseOut:null,
-                    },
-                    
-                  },
-          navs:null,
-          sideNavs:null,
-          footers:null,
+          header:null,
+          nav:null,
+          footer:null,
           
         },
-      flexibleContent:{
-          blocks:[],
-          inputs:[],
-          buttons:[],
-          Modals:[],
-      },
+      flexibleContent:[{
+          block:[],
+          input:[],
+          button:[],
+          list:[],
+      }],
     styles:{
-        colorScheme:allMyColors()[0],
+        colorScheme:allMyColors()[2],
         fontFamily:null,
         fontSize:null,
     },
-    layouts:{},
+    layouts:{display:"grid",gridTemplateRows:"repeat(9,1fr)",gridTemplateColumns:"repeat(9,1fr)",gridAreas:allMyGridAreas()[0]},
 }
 !localStorage.getItem("currentStructure")?localStorage.setItem("currentStructure",JSON.stringify(structureTemplate)):""
   
@@ -60,11 +48,7 @@ function App() {
             <Route path="/" element={<StructureContext.Provider value={{currentStructure, setCurrentStructure}}><Layout/></StructureContext.Provider>}>
               
                 <Route index element={<Home/>}/>
-                <Route path='profile' element={<Profile/>}/>
-                <Route path='projects' element={<Projects/>}/>
                 <Route path={"create"}  element={currentStructure?<WebStructure/>:<Create/>}/>
-                <Route path='templates' element={<Templates/>}/>
-                <Route path='login' element={<Login/>}/>
                 <Route path='*' element={<NotFound/>}/>
               
             </Route>

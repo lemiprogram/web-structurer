@@ -58,9 +58,7 @@ function EditNav() {
             onClick={()=>{
               setCurrentStructure(cS=>{
                 cS = structureTemplate
-                console.log(cS) 
-                renderCurrentStructure()
-                return cS
+                return {...cS}
               })
             }}
           >
