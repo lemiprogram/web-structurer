@@ -22,6 +22,14 @@ function NavBar() {
                         <div className="title">Home</div>
                     </div>
                 </NavLink>
+                <NavLink to="/projects">
+                    <div className="nav-item ">
+                        <div className="icon">
+                            <FaFolder/>
+                        </div>
+                        <div className="title">Projects</div>
+                    </div>
+                </NavLink>
                 <NavLink to="/create">
                     <div className="nav-item 
                     ">

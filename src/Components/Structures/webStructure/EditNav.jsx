@@ -11,7 +11,7 @@ export const EditNavContext = createContext()
 
 function EditNav() {
  const [accordionIsOpen, setAccordionIsOpen] = useState(null)
- const {setCurrentStructure} = useContext(StructureContext)
+ const {setCurrentStructure, structureTemplate} = useContext(StructureContext)
  const {selections,page,editNav,renderCurrentStructure}  = useContext(WebStructureContext)
  const [selectionBox, setSelectionBox] = useState(null)
 

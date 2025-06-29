@@ -21,6 +21,7 @@ const MAX_WIDTH = 20;
 const MAX_HEIGHT = 20;
 
 function WebStructure() {
+  
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingMovement, setIsEditingMovement] = useState(false);
   const [showEditNav, setShowEditNav] = useState(true);
@@ -34,13 +35,16 @@ function WebStructure() {
   const {
     currentStructure,
     setCurrentStructure,
-    myStructures,
-    setMyStructures,
+    myProjects,
+    setMyProjects,
+    showMsg,
   } = useContext(StructureContext);
 
   const editNav = useRef(null);
   const page = useRef(null);
   const headersSection = useRef(null);
+  const saveInput = useRef(null)
+  const saveModal = useRef(null)
 
   useEffect(() => renderCurrentStructure(), [currentStructure]);
   function renderCurrentStructure() {
@@ -170,7 +174,17 @@ function WebStructure() {
       isOpen: false,
     },
   };
-  function saveCurrentStructure() {}
+  function saveCurrentStructure() {
+    if(myProjects[currentStructure["id"]]){
+      return setMyProjects(mP=>{
+        showMsg(`${currentStructure["id"]} is already Saved`, "confirm")
+        mP[currentStructure["id"]] = currentStructure
+        return {...mP}
+      })
+    }
+    saveModal.current.classList.remove("hide")
+    
+  }
   function getParent(child, parent, arr = [], item = "id") {
     console.log(child);
     console.log(parent);
@@ -238,7 +252,7 @@ function WebStructure() {
 
     setTimeout(() => (editNav.current.style.width = "0px"), 50);
   };
-  function draggable(event, modal, structure = null, isEditModal=false) {
+  function draggable(event, modal, structure = null, isEditModal = false) {
     event.preventDefault();
     //get the postion of the sticky note
     const posLeft = modal.offsetLeft;
@@ -262,17 +276,18 @@ function WebStructure() {
           return { ...cS };
         });
       }
-      if(isEditModal){
-        setEditModal(eM=>{
-          eM.top  = modal.offsetTop;
+      if (isEditModal) {
+        setEditModal((eM) => {
+          eM.top = modal.offsetTop;
           eM.left = modal.offsetLeft;
-          return eM
-        })
+          return eM;
+        });
       }
     };
     document.addEventListener("mousemove", drag); //calls the drag func when the mouse moves
     document.addEventListener("mouseup", mouseUp); // calls the mouseUp func when the mouse is no longer being pressed
   }
+
   return (
     <>
       <WebStructureContext.Provider
@@ -295,11 +310,9 @@ function WebStructure() {
           <EditNav />
 
           <div
-            className="page grid relative"
+            className="page  relative"
             ref={page}
             style={{
-              display: "flex",
-              flexDirection: "column",
               position: "relative",
             }}
           >
@@ -340,6 +353,51 @@ function WebStructure() {
                 }}
               >
                 <FaRegSave size="23px" />
+                <div className="modal-body hide text-white"
+                  ref={saveModal}
+                  onClick={(e)=>{
+                    if(e.target === saveModal.current){
+                      saveModal.current.classList.add("hide")
+                    }
+                  }}
+                  >
+                  <div className="modal">
+                    <div className="heading">
+                      Save this current structure as
+                    </div>
+                    <div className="inp flex gap-2">
+                      <label>Name:</label>
+                      <input
+                        type="text"
+                        className="rounded-full outline-none bg-inherit border-[var(--text-100)]"
+                        ref={saveInput}
+                      />
+                    </div>
+                    <div 
+                    className="save-btn bg-[var(--primary-100)] px-5 py-1 rounded-full"
+                    onClick={()=>{
+                        const val = saveInput.current.value
+                        if(!val){
+                          return showMsg("please input a value","error")
+
+                        }
+
+                      setCurrentStructure(cS=>{
+                        if(myProjects[val]){
+                          showMsg("That project already exists","error")
+                          return {...cS}
+                        }
+                        cS["id"] = val
+                        myProjects[val] = cS
+                        saveModal.current.classList.add("hide")
+                        
+                        showMsg(`${val} is Saved`,"confirm")
+                        return {...cS}
+                        
+                      })
+                    }}>save</div>
+                  </div>
+                </div>
               </div>
               <div
                 className="edit-btn"

@@ -54,3 +54,28 @@
     height: 20px;
     border-radius: 50%;
 }
+
+
+.appMsg{
+    animation: errorMsgAnimate 3800ms forwards;
+    color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 20000 ;
+
+}
+
+@keyframes errorMsgAnimate {
+    from{
+        top:-100px;
+    }
+    25%{
+        top:30px;
+    }
+    75%{
+        top:30px;
+    }
+    to{
+        top:-100px;
+    }
+}

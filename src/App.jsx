@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useRef, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -29,30 +29,56 @@ export const structureTemplate = {
     fontSize: null,
   },
 };
-!localStorage.getItem("myStructures")
-  ? localStorage.setItem("myStructures", JSON.stringify([]))
+!localStorage.getItem("myProjects")
+  ? localStorage.setItem("myProjects", JSON.stringify({}))
   : "";
 !localStorage.getItem("currentStructure")
   ? localStorage.setItem("currentStructure", JSON.stringify(structureTemplate))
   : "";
 
 function App() {
-  const [myStructures, setMyStructures] = useState(
-    JSON.parse(localStorage.getItem("myStructures"))
+  const [myProjects, setMyProjects] = useState(
+    JSON.parse(localStorage.getItem("myProjects"))
   );
   const [currentStructure, setCurrentStructure] = useState(
-    JSON.parse(localStorage.getItem("currentStructure"))
+    currentStructure["id"]
   );
 
+  const appMsg = useRef(null);
+
+  function showMsg(msg, type) {
+    appMsg.current.classList.remove("hidden");
+    appMsg.current.innerText = msg;
+    if (type === "error") {
+      appMsg.current.style.backgroundColor = "red";
+    }
+    if (type === "confirm") {
+      appMsg.current.style.backgroundColor = "green";
+    }
+    setTimeout(() => appMsg.current.classList.add("hidden"), 6000);
+  }
   return (
     <>
+      <div
+        className="fixed appMsg top-0 right-0 z-50 hidden capitalize"
+        ref={appMsg}
+      >
+
+      </div>
       <BrowserRouter>
         <Routes>
           <Route
             path="/"
             element={
               <StructureContext.Provider
-                value={{ currentStructure, setCurrentStructure , myStructures, setMyStructures}}
+                value={{
+                  currentStructure,
+                  setCurrentStructure,
+                  myProjects,
+                  setMyProjects,
+                  showMsg,
+                  structureTemplate
+                }}
               >
                 <Layout />
               </StructureContext.Provider>
@@ -63,6 +89,7 @@ function App() {
               path={"create"}
               element={currentStructure ? <WebStructure /> : <Create />}
             />
+            <Route path={"projects"} element={<Projects />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

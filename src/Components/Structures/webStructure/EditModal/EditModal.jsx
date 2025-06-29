@@ -61,7 +61,7 @@ function EditModal({ paras }) {
     const selection = selections["structures"]["content"][key]
       ? selections["structures"]["content"][key]
       : selections["structures"]["flexibleContent"][key];
-    selection.__proto__.parent = () => structure;
+    selection.parent = () => structure;
     setCurrentStructure((cS) => {
       getParent(structure, cS)["str"][selection["id"]] = selection;
       return { ...cS };
