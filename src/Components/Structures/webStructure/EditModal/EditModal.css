@@ -22,7 +22,7 @@
 .editModalBtn{
     padding: 10px;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .editModal-section{
     background-color: var(--bg-300);

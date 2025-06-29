@@ -72,12 +72,13 @@ function EditModal({ paras }) {
   return (
     <>
       <div
-        className="editingModal absolute top-0 left-100 flex flex-col p-5 "
+        className="editingModal absolute  flex flex-col p-5 "
         ref={editingModal}
+        style={{top:editModal.top,left:editModal.left}}
       >
         <div
           className="editModalBtns flex jusfity-start"
-          onMouseDown={(e) => draggable(e, editingModal.current)}
+          onMouseDown={(e) => draggable(e, editingModal.current, null, true)}
         >
           <div
             className="structures-section-btn capitalize editModalBtnActive editModalBtn"

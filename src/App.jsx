@@ -22,23 +22,28 @@ export const structureTemplate = {
     nav: null,
     footer: null,
   },
-  flexibleContent:[
-    
-  ],
+  flexibleContent: [],
   styles: {
     colorScheme: allMyColors()[2],
     fontFamily: null,
     fontSize: null,
   },
 };
+!localStorage.getItem("myStructures")
+  ? localStorage.setItem("myStructures", JSON.stringify([]))
+  : "";
 !localStorage.getItem("currentStructure")
   ? localStorage.setItem("currentStructure", JSON.stringify(structureTemplate))
   : "";
 
 function App() {
+  const [myStructures, setMyStructures] = useState(
+    JSON.parse(localStorage.getItem("myStructures"))
+  );
   const [currentStructure, setCurrentStructure] = useState(
     JSON.parse(localStorage.getItem("currentStructure"))
   );
+
   return (
     <>
       <BrowserRouter>
@@ -47,7 +52,7 @@ function App() {
             path="/"
             element={
               <StructureContext.Provider
-                value={{ currentStructure, setCurrentStructure }}
+                value={{ currentStructure, setCurrentStructure , myStructures, setMyStructures}}
               >
                 <Layout />
               </StructureContext.Provider>

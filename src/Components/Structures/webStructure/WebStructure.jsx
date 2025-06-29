@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import "./WebStructure.css";
 import { v4 as uuidv4 } from "uuid";
-import { FaBars, FaEdit, FaGreaterThan } from "react-icons/fa";
+import { FaBars, FaEdit, FaGreaterThan, FaRegSave } from "react-icons/fa";
 import { StructureContext } from "../../../App";
 import EditNav from "./EditNav";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
@@ -27,11 +27,16 @@ function WebStructure() {
   const [showFullScreen, setShowFullScreen] = useState(true);
   const [isSelected, setIsSelected] = useState(null);
   const [editModal, setEditModal] = useState({
-    positionX: null,
-    positionY: null,
+    top: 0,
+    left: 0,
     section: "structures-section",
   });
-  const { currentStructure , setCurrentStructure} = useContext(StructureContext);
+  const {
+    currentStructure,
+    setCurrentStructure,
+    myStructures,
+    setMyStructures,
+  } = useContext(StructureContext);
 
   const editNav = useRef(null);
   const page = useRef(null);
@@ -165,7 +170,7 @@ function WebStructure() {
       isOpen: false,
     },
   };
-
+  function saveCurrentStructure() {}
   function getParent(child, parent, arr = [], item = "id") {
     console.log(child);
     console.log(parent);
@@ -233,7 +238,7 @@ function WebStructure() {
 
     setTimeout(() => (editNav.current.style.width = "0px"), 50);
   };
-  function draggable(event, modal, structure=null) {
+  function draggable(event, modal, structure = null, isEditModal=false) {
     event.preventDefault();
     //get the postion of the sticky note
     const posLeft = modal.offsetLeft;
@@ -250,11 +255,18 @@ function WebStructure() {
     const mouseUp = () => {
       document.removeEventListener("mousemove", drag);
       document.removeEventListener("mouseup", mouseUp);
-      if(structure){
-        setCurrentStructure(cS=>{
-          getParent(structure,cS)["lay"]["top"] = modal.offsetTop+"px"
-          getParent(structure,cS)["lay"]["left"] = modal.offsetLeft+"px"
-          return {...cS}
+      if (structure) {
+        setCurrentStructure((cS) => {
+          getParent(structure, cS)["lay"]["top"] = modal.offsetTop + "px";
+          getParent(structure, cS)["lay"]["left"] = modal.offsetLeft + "px";
+          return { ...cS };
+        });
+      }
+      if(isEditModal){
+        setEditModal(eM=>{
+          eM.top  = modal.offsetTop;
+          eM.left = modal.offsetLeft;
+          return eM
         })
       }
     };
@@ -306,8 +318,8 @@ function WebStructure() {
               <div
                 className="edit-btn "
                 onClick={() => {
-                  setIsEditing((iE) => false)
-                  setIsEditingMovement((eM) => !eM)
+                  setIsEditing((iE) => false);
+                  setIsEditingMovement((eM) => !eM);
                 }}
               >
                 <IoIosMove size="23px" />
@@ -315,11 +327,19 @@ function WebStructure() {
               <div
                 className="edit-btn "
                 onClick={() => {
-                  setIsEditing((iE) => !iE)
-                  setIsEditingMovement((eM) => false)
+                  setIsEditing((iE) => !iE);
+                  setIsEditingMovement((eM) => false);
                 }}
               >
                 <FaEdit size="23px" />
+              </div>
+              <div
+                className="edit-btn "
+                onClick={() => {
+                  saveCurrentStructure();
+                }}
+              >
+                <FaRegSave size="23px" />
               </div>
               <div
                 className="edit-btn"
