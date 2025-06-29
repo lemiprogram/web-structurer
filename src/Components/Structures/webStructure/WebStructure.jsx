@@ -14,6 +14,7 @@ import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import allMyColors from "../../../allMyColors";
 import setColorPalette from "../../../setColorPalette";
 import Display from "./Display";
+import { IoIosMove } from "react-icons/io";
 
 export const WebStructureContext = createContext();
 const MAX_WIDTH = 20;
@@ -21,6 +22,7 @@ const MAX_HEIGHT = 20;
 
 function WebStructure() {
   const [isEditing, setIsEditing] = useState(false);
+  const [isEditingMovement, setIsEditingMovement] = useState(false);
   const [showEditNav, setShowEditNav] = useState(true);
   const [showFullScreen, setShowFullScreen] = useState(true);
   const [isSelected, setIsSelected] = useState(null);
@@ -29,7 +31,7 @@ function WebStructure() {
     positionY: null,
     section: "structures-section",
   });
-  const { currentStructure } = useContext(StructureContext);
+  const { currentStructure , setCurrentStructure} = useContext(StructureContext);
 
   const editNav = useRef(null);
   const page = useRef(null);
@@ -49,9 +51,9 @@ function WebStructure() {
       id: uuidv4(),
       content: {
         header: {
-          id: "headers-" + uuidv4(),
+          id: uuidv4(),
           type: "header",
-          str: [],
+          str: {},
           sty: {
             backgroundColor: "var(--bg-200)",
             width: "100vw",
@@ -66,9 +68,9 @@ function WebStructure() {
           txt: "Header",
         },
         nav: {
-          id: "navs" + uuidv4(),
+          id: uuidv4(),
           type: "nav",
-          str: [],
+          str: {},
           sty: {
             backgroundColor: "var(--bg-300)",
             width: "90%",
@@ -86,9 +88,9 @@ function WebStructure() {
           txt: "Nav",
         },
         footer: {
-          id: "navs" + uuidv4(),
+          id: uuidv4(),
           type: "footer",
-          str: [],
+          str: {},
           sty: { backgroundColor: "var(--bg-200)" },
           lay: {
             display: "flex",
@@ -103,8 +105,9 @@ function WebStructure() {
       },
       flexibleContent: {
         block: {
+          id: uuidv4(),
           type: "block",
-          str: [],
+          str: {},
           sty: { backgroundColor: "inherit", width: "100px", height: "100px" },
           lay: {
             display: "block",
@@ -114,40 +117,31 @@ function WebStructure() {
           txt: "block",
         },
         input: {
+          id: uuidv4(),
           type: "input",
           sty: {
             backgroundColor: "var(--bg-200)",
             borderRadius: "20px",
             paddingInline: "10px",
             paddingBlock: "5px",
-            width:"300px",
+            width: "300px",
           },
           lay: {},
         },
         button: {
+          id: uuidv4(),
           type: "button",
-          str: [
-            {
-              type: "button",
-              sty: { backgroundColor: "var(--primary-100)" },
-              lay: {
-                display: "inline",
-                justifyContent: "start",
-                alignItems: "center",
-              },
-              txt: "button",
-            },
-          ],
-          sty: { backgroundColor: "inherit" },
+          sty: { backgroundColor: "var(--primary-100)" },
           lay: {
-            display: "flex",
+            display: "inline",
             justifyContent: "start",
             alignItems: "center",
           },
+          txt: "button",
         },
         list: {
+          id: uuidv4(),
           type: "list",
-          str: [],
           sty: {
             backgroundColor: "inherit",
             textIndent: "20px",
@@ -172,6 +166,36 @@ function WebStructure() {
     },
   };
 
+  function getParent(child, parent, arr = [], item = "id") {
+    console.log(child);
+    console.log(parent);
+    const max_len = arr.length - 1;
+    if (child["parentStructure"]) {
+      console.log(child);
+      arr.push(child["parentStructure"]()[item]);
+
+      console.log(parent);
+      return getParent(child["parentStructure"](), parent, arr);
+    }
+    if (parent["content"] || parent["flexibleContent"]) {
+      parent = parent["content"][child["type" /* type */]]
+        ? parent["content"][child["type" /* type */]]
+        : parent["flexibleContent"][child["id" /* id */]]
+        ? parent["flexibleContent"][child["id" /* id */]]
+        : parent;
+    }
+    if (arr.length) {
+      console.log(child);
+      console.log(parent);
+      return getParent(
+        child,
+        parent["str"][arr[max_len]],
+        arr.splice(0, max_len)
+      );
+    }
+    console.log(parent);
+    return parent;
+  }
   const showFullScreenFunc = (fS) => {
     if (!editNav.current) {
       return;
@@ -209,6 +233,34 @@ function WebStructure() {
 
     setTimeout(() => (editNav.current.style.width = "0px"), 50);
   };
+  function draggable(event, modal, structure=null) {
+    event.preventDefault();
+    //get the postion of the sticky note
+    const posLeft = modal.offsetLeft;
+    const posTop = modal.offsetTop;
+    //get the postion of the mouse when mousedown
+    const startX = event.pageX;
+    const startY = event.pageY;
+    //drag function changes the x and y positon of the sticky note based on the postion of the mouse
+    const drag = (event) => {
+      modal.style.left = `${posLeft + (event.pageX - startX)}px`;
+      modal.style.top = `${posTop + (event.pageY - startY)}px`;
+    };
+    //mouseUp function removes the eventlisteners when the the mouse up
+    const mouseUp = () => {
+      document.removeEventListener("mousemove", drag);
+      document.removeEventListener("mouseup", mouseUp);
+      if(structure){
+        setCurrentStructure(cS=>{
+          getParent(structure,cS)["lay"]["top"] = modal.offsetTop+"px"
+          getParent(structure,cS)["lay"]["left"] = modal.offsetLeft+"px"
+          return {...cS}
+        })
+      }
+    };
+    document.addEventListener("mousemove", drag); //calls the drag func when the mouse moves
+    document.addEventListener("mouseup", mouseUp); // calls the mouseUp func when the mouse is no longer being pressed
+  }
   return (
     <>
       <WebStructureContext.Provider
@@ -218,10 +270,13 @@ function WebStructure() {
           editNav,
           headersSection,
           isEditing,
+          isEditingMovement,
           isSelected,
           setIsSelected,
           editModal,
           setEditModal,
+          getParent,
+          draggable,
         }}
       >
         <div className="flex page">
@@ -250,7 +305,19 @@ function WebStructure() {
               </div>
               <div
                 className="edit-btn "
-                onClick={() => setIsEditing((iE) => !iE)}
+                onClick={() => {
+                  setIsEditing((iE) => false)
+                  setIsEditingMovement((eM) => !eM)
+                }}
+              >
+                <IoIosMove size="23px" />
+              </div>
+              <div
+                className="edit-btn "
+                onClick={() => {
+                  setIsEditing((iE) => !iE)
+                  setIsEditingMovement((eM) => false)
+                }}
               >
                 <FaEdit size="23px" />
               </div>
@@ -271,8 +338,12 @@ function WebStructure() {
               </div>
             </div>
             {isEditing ? (
-              <div className="fixed top-2 right-2 bg-[var(--text-100)] text-[var(--bg-100)] px-4 cursor-default py-2 rounded-full opacity-80">
+              <div className="fixed top-2 right-2 bg-[var(--text-100)] text-[var(--bg-100)] px-4 cursor-default py-2 rounded-full opacity-80 z-50">
                 Edit Mode
+              </div>
+            ) : isEditingMovement ? (
+              <div className="fixed top-2 right-2 bg-[var(--text-100)] text-[var(--bg-100)] px-4 cursor-default py-2 rounded-full opacity-80 z-50">
+                Restructure Mode
               </div>
             ) : (
               ""

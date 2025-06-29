@@ -16,19 +16,13 @@
 .editModalBtns{
     background-color: var(--faded-grey);
     cursor: move;
+    justify-content: start;
     
 }
 .editModalBtn{
-    padding: 10px 20px;
+    padding: 10px;
     cursor: pointer;
-    background-color: var(--bg-200);
-    color: var(--text-100);
-    
-}
-.editModalBtnActive {
-    border-bottom:2px solid var(--bg-100);
-    background-color: var(--primary-200);
-    color: var(--bg-100);
+    border-radius: 2px;
 }
 .editModal-section{
     background-color: var(--bg-300);
@@ -49,7 +43,7 @@
     height: 300px;
     padding-block:20px;
     scrollbar-width: none;
-    max-width: fit-content;
+    width: 100%;
 }
 .editModal-item{
     padding: 20px;

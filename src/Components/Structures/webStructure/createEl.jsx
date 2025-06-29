@@ -2,30 +2,74 @@ import React, { useContext, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { WebStructureContext } from "./WebStructure";
 import EditModal from "./EditModal/EditModal";
+import { StructureContext } from "../../../App";
 
 const CreateEl = ({ structure }) => {
   const str = useRef(null);
-  const { isEditing, isSelected, setIsSelected } =
+  const { isEditing, isEditingMovement, isSelected, setIsSelected, getParent, draggable } =
     useContext(WebStructureContext);
+  const { setCurrentStructure } = useContext(StructureContext);
+
   if (!structure) {
     return;
   }
+  const movementCondition = () => {
+    if (!isEditingMovement) {
+      return false;
+    }
+    if (!structure["lay"]["position"]) {
+      return false;
+    }
+    if (structure["lay"]["position"] === "static") {
+      return false;
+    }
+    return true;
+  };
   if (structure["type"] === "input") {
     return (
       <>
         <input
           type="text"
           style={{ ...structure["sty"], ...structure["lay"] }}
+          id={structure["id"]}
           ref={str}
-          onClick={(e) => {
+          onMouseOver={() => {
+            if (!movementCondition()) {
+              return;
+            }
+            str.current.style.cursor = "move";
+          }}
+          onMouseOut={() => {
+            str.current.style.cursor = "defaullt";
+          }}
+          onMouseDown={(e) => {
+            if (!movementCondition()) {
+              return;
+            }
+
+            draggable(e, str.current,strPos);
+          }}
+          onMouseUp={() => {
+            setStrPos((sP) => {
+              sP.top = str.current.offsetTop;
+              sP.left = str.current.offsetLeft;
+              return { ...sP };
+            });
+          }}
+          onDoubleClick={(e) => {
             if (isEditing) {
               setIsSelected((iS) => (iS !== structure ? structure : null));
               return;
+              if (e.target.id !== structure["id"]) {
+                return;
+              }
             }
           }}
         />
-        {isSelected === structure ? (
-          <EditModal paras={{ structure, type: structure["type"] }} />
+        {isSelected === structure && isEditing ? (
+          <EditModal
+            paras={{ structure, id: structure["id"], type: structure["type"] }}
+          />
         ) : (
           ""
         )}
@@ -33,20 +77,45 @@ const CreateEl = ({ structure }) => {
     );
   }
   if (structure["type"] === "button") {
+    console.log(structure);
     return (
       <>
         <button
           style={{ ...structure["sty"], ...structure["lay"] }}
           ref={str}
-          onClick={(e) => {
+          id={structure["id"]}
+          onMouseOver={() => {
+            if (!movementCondition()) {
+              return;
+            }
+            str.current.style.cursor = "move";
+          }}
+          onMouseOut={() => {
+            str.current.style.cursor = "defaullt";
+          }}
+          onMouseDown={(e) => {
+            if (!movementCondition()) {
+              return;
+            }
+
+            draggable(e, str.current, structure);
+          }}
+          onDoubleClick={(e) => {
+            if (e.target.id !== structure["id"]) {
+              return;
+            }
             if (isEditing) {
               setIsSelected((iS) => (iS !== structure ? structure : null));
               return;
             }
           }}
-        ></button>
-        {isSelected === structure ? (
-          <EditModal paras={{ structure, type: structure["type"] }} />
+        >
+          {structure["txt"]}
+        </button>
+        {isSelected === structure && isEditing ? (
+          <EditModal
+            paras={{ structure, id: structure["id"], type: structure["type"] }}
+          />
         ) : (
           ""
         )}
@@ -57,14 +126,34 @@ const CreateEl = ({ structure }) => {
     <>
       <div
         style={{ ...structure["sty"], ...structure["lay"] }}
+        id={structure["id"]}
         ref={str}
-        onClick={(e) => {
+        onMouseOver={() => {
+          if (!movementCondition()) {
+            return;
+          }
+
+          str.current.style.cursor = "move";
+        }}
+        onMouseOut={() => {
+          str.current.style.cursor = "defaullt";
+        }}
+        onMouseDown={(e) => {
+          if (!movementCondition()) {
+            return;
+          }
+
+          draggable(e, str.current, structure);
+        }}
+        onDoubleClick={(e) => {
+          if (e.target.id !== structure["id"]) {
+            return;
+          }
           if (isEditing) {
             setIsSelected((iS) => (iS !== structure ? structure : null));
             return;
           }
         }}
-        id={structure.id}
       >
         {structure["con"] && structure["type"] !== "list" ? (
           <div>{structure["txt"]}</div>
@@ -73,11 +162,6 @@ const CreateEl = ({ structure }) => {
         )}
         {structure["txt"] && structure["type"] !== "button" ? (
           <div>{structure["txt"]}</div>
-        ) : (
-          ""
-        )}
-        {structure["type"] === "button" ? (
-          <button>{structure["txt"]}</button>
         ) : (
           ""
         )}
@@ -91,13 +175,15 @@ const CreateEl = ({ structure }) => {
           ""
         )}
         {structure["str"]
-          ? structure["str"].map((item) => (
-              <CreateEl key={uuidv4()} structure={item["str"]} />
+          ? Object.keys(structure["str"]).map((item) => (
+              <CreateEl key={uuidv4()} structure={structure["str"][item]} />
             ))
           : ""}
       </div>
-      {isSelected === structure ? (
-        <EditModal paras={{ structure, type: structure["type"] }} />
+      {isSelected === structure && isEditing ? (
+        <EditModal
+          paras={{ structure, id: structure["id"], type: structure["type"] }}
+        />
       ) : (
         ""
       )}

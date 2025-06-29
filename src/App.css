@@ -1,4 +1,8 @@
 
+.sideNav{
+    z-index: 200;
+}
+
 .sideNav .nav-items{
     display: flex;
     flex-direction: column;

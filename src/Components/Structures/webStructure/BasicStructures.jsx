@@ -41,7 +41,7 @@ function BasicStructures() {
                             key={uuidv4()}
                             className='content-boxes'
                             onClick={()=>setCurrentStructure(cS=>{
-                                cS["flexibleContent"].push(selections["structures"]["flexibleContent"][item])
+                                cS["flexibleContent"][selections["structures"]["flexibleContent"][item]["id"]] = selections["structures"]["flexibleContent"][item]
                                 return {...cS}
                             })}
 

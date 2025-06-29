@@ -30,6 +30,7 @@
 }
 .edit-btns:hover{
     opacity: 100%;
+    z-index: 200;
 }
 .edit-btn{
     padding: 5px;

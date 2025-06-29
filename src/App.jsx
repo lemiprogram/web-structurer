@@ -22,7 +22,9 @@ export const structureTemplate = {
     nav: null,
     footer: null,
   },
-  flexibleContent: [],
+  flexibleContent:[
+    
+  ],
   styles: {
     colorScheme: allMyColors()[2],
     fontFamily: null,
