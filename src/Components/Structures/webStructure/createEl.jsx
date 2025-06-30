@@ -6,8 +6,14 @@ import { StructureContext } from "../../../App";
 
 const CreateEl = ({ structure }) => {
   const str = useRef(null);
-  const { isEditing, isEditingMovement, isSelected, setIsSelected, getParent, draggable } =
-    useContext(WebStructureContext);
+  const {
+    isEditing,
+    isEditingMovement,
+    isSelected,
+    setIsSelected,
+    getParent,
+    draggable,
+  } = useContext(WebStructureContext);
   const { setCurrentStructure } = useContext(StructureContext);
 
   if (!structure) {
@@ -25,6 +31,60 @@ const CreateEl = ({ structure }) => {
     }
     return true;
   };
+  if (structure["type"] === "list") {
+    return (
+      <>
+        <ul
+          style={{ ...structure["sty"], ...structure["lay"] }}
+          id={structure["id"]}
+          ref={str}
+          onMouseOver={() => {
+            if (!movementCondition()) {
+              return;
+            }
+            str.current.style.cursor = "move";
+          }}
+          onMouseOut={() => {
+            str.current.style.cursor = "defaullt";
+          }}
+          onMouseDown={(e) => {
+            if (!movementCondition()) {
+              return;
+            }
+
+            draggable(e, str.current, structure);
+          }}
+          onMouseUp={() => {
+            setStrPos((sP) => {
+              sP.top = str.current.offsetTop;
+              sP.left = str.current.offsetLeft;
+              return { ...sP };
+            });
+          }}
+          onDoubleClick={(e) => {
+            if (isEditing) {
+              if (e.target.id !== structure["id"]) {
+                return;
+              }
+              setIsSelected((iS) => (iS !== structure ? structure : null));
+              return;
+            }
+          }}
+        >
+          {structure["con"].map((item) => (
+            <li key={uuidv4()}>{item}</li>
+          ))}
+        </ul>
+        {isSelected === structure && isEditing ? (
+          <EditModal
+            paras={{ structure, id: structure["id"], type: structure["type"] }}
+          />
+        ) : (
+          ""
+        )}
+      </>
+    );
+  }
   if (structure["type"] === "input") {
     return (
       <>
@@ -47,7 +107,7 @@ const CreateEl = ({ structure }) => {
               return;
             }
 
-            draggable(e, str.current,strPos);
+            draggable(e, str.current, structure);
           }}
           onMouseUp={() => {
             setStrPos((sP) => {
@@ -58,11 +118,11 @@ const CreateEl = ({ structure }) => {
           }}
           onDoubleClick={(e) => {
             if (isEditing) {
-              setIsSelected((iS) => (iS !== structure ? structure : null));
-              return;
               if (e.target.id !== structure["id"]) {
                 return;
               }
+              setIsSelected((iS) => (iS !== structure ? structure : null));
+              return;
             }
           }}
         />
@@ -81,7 +141,7 @@ const CreateEl = ({ structure }) => {
     return (
       <>
         <button
-          style={{ ...structure["sty"], ...structure["lay"] }}
+          style={{ ...{ ...structure["sty"] }, ...structure["lay"] }}
           ref={str}
           id={structure["id"]}
           onMouseOver={() => {
@@ -162,15 +222,6 @@ const CreateEl = ({ structure }) => {
         )}
         {structure["txt"] && structure["type"] !== "button" ? (
           <div>{structure["txt"]}</div>
-        ) : (
-          ""
-        )}
-        {structure["type"] === "list" ? (
-          <ul>
-            {structure["con"].map((item) => (
-              <li key={uuidv4()}>{item}</li>
-            ))}
-          </ul>
         ) : (
           ""
         )}

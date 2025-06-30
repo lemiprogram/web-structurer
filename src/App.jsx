@@ -22,7 +22,7 @@ export const structureTemplate = {
     nav: null,
     footer: null,
   },
-  flexibleContent: [],
+  flexibleContent:{} ,
   styles: {
     colorScheme: allMyColors()[2],
     fontFamily: null,
@@ -41,7 +41,7 @@ function App() {
     JSON.parse(localStorage.getItem("myProjects"))
   );
   const [currentStructure, setCurrentStructure] = useState(
-    currentStructure["id"]
+    JSON.parse(localStorage.getItem("currentStructure"))
   );
 
   const appMsg = useRef(null);

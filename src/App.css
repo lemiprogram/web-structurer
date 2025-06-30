@@ -79,3 +79,9 @@
         top:-100px;
     }
 }
+.projects{
+    width: 400px;
+    height: 500px;
+    background-color: var(--bg-200);
+    border-radius: 20px;
+}

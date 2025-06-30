@@ -17,12 +17,12 @@ function Projects() {
   };
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-full justify-center items-center">
         <div className="heading text-5xl mx-auto capitalize ">
           My projects
         </div>
-        <div className="projects">
-          {myProjects ? (
+        <div className="projects card flex flex-col p-5">
+          {Object.keys(myProjects).length ? (
             Object.keys(myProjects).map((item) => (
               <div
                 key={uuidv4()}

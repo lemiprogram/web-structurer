@@ -9,8 +9,11 @@ function Display() {
   return (
     
     <>
-        {Object.keys(currentStructure["content"]).map(item=><CreateEl key={uuidv4()} structure={currentStructure["content"][item]}/>)}
-        {currentStructure["flexibleContent"].map(str=><CreateEl key={uuidv4()} structure={str}/>)}
+        <div className="flex flex-col justify-between">
+          {Object.keys(currentStructure["content"]).map(item=>item!== "footer"?<CreateEl key={uuidv4()} structure={currentStructure["content"][item]}/>:"")}
+          {Object.keys(currentStructure["flexibleContent"]).map(item=><CreateEl key={uuidv4()} structure={currentStructure["flexibleContent"][item]}/>)}
+          {Object.keys(currentStructure["content"]).map(item=>item=== "footer"?<CreateEl key={uuidv4()} structure={currentStructure["content"][item]}/>:"")}
+        </div>
     </>
 
   )

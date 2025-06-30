@@ -42,16 +42,7 @@ function EditModal({ paras }) {
     const key = modal.querySelector("select").value;
     const val = modal.querySelector("input").value;
     setCurrentStructure((cS) => {
-      if (cS.content[type]) {
-        cS.content[type][entry][key] = val;
-      } else {
-        cS["flexibleContent"] = cS["flexibleContent"].map((str) => {
-          if (str === structure) {
-            str[entry][key] = val;
-          }
-          return str;
-        });
-      }
+      getParent(structure,cS)[entry][key] = val;
       return { ...cS };
     });
     closeModal(modal);
@@ -61,7 +52,8 @@ function EditModal({ paras }) {
     const selection = selections["structures"]["content"][key]
       ? selections["structures"]["content"][key]
       : selections["structures"]["flexibleContent"][key];
-    selection.parent = () => structure;
+
+    selection.parent =  {...structure, str:null};
     setCurrentStructure((cS) => {
       getParent(structure, cS)["str"][selection["id"]] = selection;
       return { ...cS };
@@ -296,7 +288,7 @@ function EditModal({ paras }) {
               ""
             )}
             <div className="add-btnSection flex justify-center">
-              {structure["str"] ? (
+              {structure["str"] && false ? (
                 <div
                   className="add-btn rounded-full"
                   onClick={() => showModal(addStructure.current)}

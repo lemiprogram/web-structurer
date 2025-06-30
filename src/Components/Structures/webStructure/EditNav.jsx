@@ -54,7 +54,7 @@ function EditNav() {
             <EditNavStyles/>
           </div>
           <button 
-            className=""
+            className="hover:bg-white py-3 transition-all duration-[1s]"
             onClick={()=>{
               setCurrentStructure(cS=>{
                 cS = structureTemplate
@@ -62,7 +62,7 @@ function EditNav() {
               })
             }}
           >
-            Reset
+            New Struct
           </button>
         </div>
       </EditNavContext.Provider>

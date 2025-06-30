@@ -14,7 +14,7 @@ function Home() {
                     <div className="heading text-[var(--primary-100)] text-3xl p-4">Welcome  to JustStructs</div>
                     <div className='text-xl'>... an online web structuring app</div>
                     <NavLink to="/create">
-                                        <div className="nav-item  text-xl bg-[var(--primary-100)] rounded-full px-4 py-2 capitalize mt-4 
+                                        <div className="nav-item  text-xl bg-[var(--primary-100)] rounded-full px-4 py-2 capitalize mt-4 text-white 
                                         ">
                                                 get Started
                                         </div>

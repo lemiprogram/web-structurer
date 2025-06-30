@@ -65,11 +65,12 @@ function WebStructure() {
           str: {},
           sty: {
             backgroundColor: "var(--bg-200)",
-            width: "100vw",
+            width: "100%  ",
             height: "minContent",
             padding: "20px",
           },
           lay: {
+            position:"absolute",
             display: "flex",
             justifyContent: "spaceBetween",
             alignItems: "center",
@@ -119,6 +120,9 @@ function WebStructure() {
           str: {},
           sty: { backgroundColor: "inherit", width: "100px", height: "100px" },
           lay: {
+            position:"absolute",
+            top:"50px",
+            left:"50px",
             display: "block",
             justifyContent: "center",
             alignItems: "center",
@@ -133,15 +137,23 @@ function WebStructure() {
             borderRadius: "20px",
             paddingInline: "10px",
             paddingBlock: "5px",
+            borderRadius:"20px",
             width: "300px",
           },
-          lay: {},
+          lay: {
+            position:"absolute",
+            top:"50px",
+            left:"50px",
+          },
         },
         button: {
           id: uuidv4(),
           type: "button",
-          sty: { backgroundColor: "var(--primary-100)" },
+          sty: { backgroundColor: "var(--primary-100)",paddingInline:"20px",paddingBlock:"5px" },
           lay: {
+            position:"absolute",
+            top:"50px",
+            left:"50px",
             display: "inline",
             justifyContent: "start",
             alignItems: "center",
@@ -155,8 +167,12 @@ function WebStructure() {
             backgroundColor: "inherit",
             textIndent: "20px",
             color: "inherit",
+            padding:"10px",
           },
           lay: {
+            position:"absolute",
+            top:"50px",
+            left:"50px",
             display: "flex",
             justifyContent: "start",
             alignItems: "center",
@@ -189,12 +205,12 @@ function WebStructure() {
     console.log(child);
     console.log(parent);
     const max_len = arr.length - 1;
-    if (child["parentStructure"]) {
+    if (child["parent"]) {
       console.log(child);
-      arr.push(child["parentStructure"]()[item]);
+      arr.push(child["parent"][item]);
 
       console.log(parent);
-      return getParent(child["parentStructure"](), parent, arr);
+      return getParent(child["parent"], parent, arr);
     }
     if (parent["content"] || parent["flexibleContent"]) {
       parent = parent["content"][child["type" /* type */]]
